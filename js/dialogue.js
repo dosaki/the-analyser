@@ -62,8 +62,11 @@ function DialogueNode(questionText, answersMap, onSelectFunction) {
       answer.className = "answer";
       answer.innerHTML = HTMLIZE.newlines.toParagraphs(_textAnswers[k]);
       (function(a) {
+        answer.addEventListener('mouseover', function(e) {
+          AUDIO.hover.play();
+        });
         answer.addEventListener('click', function(e) {
-          console.log("Selecting " + a)
+          AUDIO.select.play();
           SUBJECT_MANAGER.currentSubject.conversation.selectNode(_self.getAnswerNode(a));
           if (_onSelect && typeof _onSelect === "function") {
             _onSelect(_self);
@@ -138,7 +141,6 @@ function Dialogue(rootNode) {
 
   _self.update = function(elementSelector) {
     if (isDirty) {
-      console.log("Updating conversation...");
       _self.renderDialogueNode(_self.currentNode, elementSelector);
       isDirty = false;
     }

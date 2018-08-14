@@ -73,7 +73,6 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
 
   _self.selectSubject = function(subject, element) {
     if (subject !== _self.currentSubject && element !== _self.currentSubjectListElement) {
-      console.log("Selecting!");
       _self.previousSubject = _self.currentSubject;
       _self.previousSubjectListElement = _self.currentSubjectListElement;
       _self.currentSubject = subject;
@@ -84,12 +83,10 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
 
   _self.update = function() {
     if (listIsDirty) {
-      console.log("Updating list...");
       listIsDirty = false;
       _self.renderList();
     }
     if (isDirty) {
-      console.log("Updating node...");
       _self.highlightSubject(_self.currentSubjectListElement);
       _self.renderSubject(_self.currentSubject);
       isDirty = false;
@@ -105,7 +102,11 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     for (var i in subjects) {
       var subjectLi = document.createElement('li');
       subjectLi.innerHTML = subjects[i].name;
+      subjectLi.addEventListener('mouseover', function(e) {
+        AUDIO.hover.play();
+      });
       subjectLi.addEventListener('click', function(e) {
+        AUDIO.select.play();
         _self.selectSubject(subjects[i], e.target);
       });
       list.appendChild(subjectLi);
