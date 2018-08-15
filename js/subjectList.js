@@ -52,12 +52,19 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
   var listIsDirty = true;
 
   _self.renderSubject = function(subject) {
+    var container = document.querySelector(elementSelector);
+    container.innerHTML = "";
     if (subject) {
       var subjectElement = subject.render();
-      var container = document.querySelector(elementSelector);
-      container.innerHTML = "";
       container.appendChild(subjectElement);
     }
+  };
+
+  _self.wipeSubjectAreas = function(){
+      var info = document.querySelector(elementSelector);
+      info.innerHTML = "";
+      var dialogue = document.querySelector(dialogueSelector);
+      dialogue.innerHTML = "";
   };
 
   _self.highlightSubject = function(element) {
@@ -96,10 +103,11 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     }
   };
 
+
   _self.renderList = function() {
     var container = document.querySelector(listSelector);
     var list = document.createElement('ul');
-    for (var i in subjects) {
+    for (var i in subjectsToAnalyse()) {
       var subjectLi = document.createElement('li');
       subjectLi.innerHTML = subjects[i].name;
       subjectLi.addEventListener('mouseover', function(e) {
@@ -126,6 +134,22 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
 
   _self.addSubject = function(subject) {
     listIsDirty = true;
-    _self.subjects.push(subject);
+    subjects.push(subject);
+  }
+
+  _self.decomissionCurrent = function(){
+    _self.previousSubject = _self.currentSubject;
+    _self.previousSubjectListElement = _self.currentSubjectListElement;
+    _self.currentSubject.flagForDecommission();
+    _self.currentSubject = null;
+    _self.currentSubjectListElement = null;
+    _self.renderList();
+    _self.wipeSubjectAreas();
+  }
+
+  var subjectsToAnalyse = function(){
+    return subjects.filter(function(s){
+      return !s.isFlaggedForDecommission();
+    });
   }
 };

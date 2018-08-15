@@ -1,17 +1,3 @@
-var rand = function(min, max) {
-  return Math.floor(Math.random() * ((max || 200) - (min || 0))) + (min || 0);
-}
-
-//Thank you https://stackoverflow.com/questions/1484506/random-color-generator
-function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
-
 function RandomSVG(options) {
 
   'use strict';
@@ -112,14 +98,17 @@ function RandomSVG(options) {
     }
 
     var rectangles = rand(0, _options.maxRectangles);
-    for (var i = 0; i < circles; i++) {
+    for (var i = 0; i < rectangles; i++) {
       _svg.appendChild(drawRect());
     }
 
     var triangles = rand(0, _options.maxTriangles);
-    for (var i = 0; i < circles; i++) {
+    for (var i = 0; i < triangles; i++) {
       _svg.appendChild(drawTriangle());
     }
+    console.log("circles", circles)
+    console.log("rectangles", rectangles)
+    console.log("triangles", triangles)
   };
 
   init(options || {});

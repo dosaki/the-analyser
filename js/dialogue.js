@@ -58,23 +58,15 @@ function DialogueNode(questionText, answersMap, onSelectFunction) {
 
     var _textAnswers = Object.keys(_answers);
     for (var k in _textAnswers) {
-      var answer = document.createElement("li");
-      answer.className = "answer";
-      answer.innerHTML = HTMLIZE.newlines.toParagraphs(_textAnswers[k]);
-      (function(a) {
-        answer.addEventListener('mouseover', function(e) {
-          AUDIO.hover.play();
-        });
-        answer.addEventListener('click', function(e) {
-          AUDIO.select.play();
-          SUBJECT_MANAGER.currentSubject.conversation.selectNode(_self.getAnswerNode(a));
-          if (_onSelect && typeof _onSelect === "function") {
-            _onSelect(_self);
-          };
-        });
-      })(_textAnswers[k]);
-      answersContainerElement.appendChild(answer);
+      answersContainerElement.appendChild(makeAnswerElement(_textAnswers[k]));
     }
+    answersContainerElement.appendChild(makeAnswerElement("Decomission", function(e){
+      AUDIO.select.play();
+      SUBJECT_MANAGER.decomissionCurrent();
+      if (_onSelect && typeof _onSelect === "function") {
+        _onSelect(_self);
+      };
+    }));
 
     return answersContainerElement;
   };
@@ -85,6 +77,26 @@ function DialogueNode(questionText, answersMap, onSelectFunction) {
     nodeHTML.appendChild(_self.answersAsHtml());
     return nodeHTML;
   };
+
+  var makeAnswerElement = function(text, click, mouseover){
+    var answer = document.createElement("li");
+    answer.className = "answer";
+    answer.innerHTML = HTMLIZE.newlines.toParagraphs(text);
+    (function(a) {
+      answer.addEventListener('mouseover', mouseover || function(e) {
+        AUDIO.hover.play();
+      });
+      answer.addEventListener('click', click || function(e) {
+        AUDIO.select.play();
+        SUBJECT_MANAGER.currentSubject.conversation.selectNode(_self.getAnswerNode(a));
+        if (_onSelect && typeof _onSelect === "function") {
+          _onSelect(_self);
+        };
+      });
+    })(text);
+
+    return answer
+  }
 
   var resolveAnswers = function(textAnswer) {
     if(typeof _answers[textAnswer] === "function"){

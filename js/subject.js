@@ -11,6 +11,8 @@ function Subject(name, status, purpose, notes, conversation){
   _self.conversation = null;
   _self.imageSVG = null;
 
+  var _isFlaggedForDecommission = false;
+
   _self.render = function(){
     var elementHolder = document.createElement('ul');
     elementHolder.append(_self.imageSVG.getElement());
@@ -19,11 +21,23 @@ function Subject(name, status, purpose, notes, conversation){
     elementHolder.appendChild(makePropertyElement("Purpose", _self.purpose));
     elementHolder.appendChild(makePropertyElement("Notes", _self.notes));
     return elementHolder;
-  }
+  };
 
   _self.update = function(dialogueSelector) {
     _self.conversation.update(dialogueSelector);
+  };
+
+  _self.flagForDecommission = function(){
+    _isFlaggedForDecommission = true;
+  };
+
+  _self.flagAsFitForDuty = function(){
+    _isFlaggedForDecommission = false;
   }
+
+  _self.isFlaggedForDecommission = function(){
+    return _isFlaggedForDecommission;
+  };
 
   var makePropertyElement = function(propertyName, property){
     var element = document.createElement('li');
@@ -44,9 +58,7 @@ function Subject(name, status, purpose, notes, conversation){
     _self.purpose = p;
     _self.notes = r;
     _self.conversation = c;
-    _self.imageSVG = new RandomSVG({
-      maxCircles:10
-    });
+    _self.imageSVG = new RandomSVG({});
   }
 
   init(name, status, purpose, notes, conversation);
