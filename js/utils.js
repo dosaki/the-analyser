@@ -1,6 +1,11 @@
 var rand = function(min, max) {
   return Math.floor(Math.random() * ((max || 200) - (min || 0))) + (min || 0);
-}
+};
+
+var randWord = function(list) {
+  var index = Math.floor(Math.random() * list.length);
+  return list[index];
+};
 
 //Thank you https://stackoverflow.com/questions/1484506/random-color-generator
 function getRandomColor() {
@@ -10,4 +15,4 @@ function getRandomColor() {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
-}
+};

@@ -1,9 +1,14 @@
 * {
-  margin:0;
+  margin: 0;
   padding: 0;
 }
 
-ul,li {
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+ul, li {
   list-style: none;
 }
 
@@ -11,19 +16,68 @@ body {
   background: #404040;
   color: #c8c8c8;
   font-family: monospace;
+}
+
+.splash-logo {
+  margin: auto;
+  outline: 0;
+}
+
+.splash-logo svg>circle {
+  stroke: red;
+}
+
+.splash-logo svg>rect {
+  fill: red;
+}
+
+.splash-logo:hover svg>circle {
+  stroke: #87b32a;
+}
+
+.splash-logo:hover svg>rect {
+  fill: #87b32a;
+}
+
+.splash-logo:active svg>circle {
+  stroke: #11ff00;
+}
+
+.splash-logo:active svg>rect {
+  fill: #11ff00;
+}
+
+.splash-logo::-moz-focus-inner {
+  border: 0;
+}
+
+.screen {
   display: flex;
   flex-direction: column;
+  min-height: 100%;
+  1
+}
+
+.hidden {
+  display: none;
+}
+
+button {
+  background: transparent;
+  font-size: 2em;
+  border: 0;
+  color: #c8c8c8;
 }
 
 .title {
-  padding:10px;
+  padding: 10px;
   display: flex;
   background: #626262;
 }
 
 .game-container {
   display: flex;
-  flex-grow: 1;
+  flex: 1 1 auto;
 }
 
 .subject-interaction {
@@ -34,8 +88,8 @@ body {
 
 .subject-list-window {
   padding: 5px;
-  background:  #2f2f2f;
-  border-right:1px solid black;
+  background: #2f2f2f;
+  border-right: 1px solid black;
 }
 
 .subject-list li {
@@ -43,29 +97,29 @@ body {
 }
 
 .subject-list li.selected {
-  background:  #3c454a;
+  background: #3c454a;
 }
 
 .subject-list li:hover {
-  background:  #495860;
+  background: #495860;
 }
 
 .subject-info {
   background: #43494d;
   flex-grow: 2;
-  border-bottom:1px solid black;
-  padding:13px;
+  border-bottom: 1px solid black;
+  padding: 13px;
 }
 
 .dialog-box {
   flex-grow: 1;
-  padding:13px;
+  padding: 13px;
 }
 
 .dialog-box .question {
   font-weight: bolder;
   font-size: 1.4em;
-  margin-bottom:1.2em;
+  margin-bottom: 1.2em;
 }
 
 .dialog-box .answer {
@@ -75,7 +129,7 @@ body {
 }
 
 .dialog-box .answer:hover {
-  background:  #495860;
+  background: #495860;
 }
 
 .dialog-box .answer:before {
@@ -84,55 +138,55 @@ body {
   margin-right: 4px;
 }
 
-.typewriter li,
-.typewriter .question {
+.typewriter li, .typewriter .question {
   overflow: hidden;
   white-space: nowrap;
   animation: typing 5s steps(100, end);
 }
 
 .console-run {
-  width: 0;
-  height: 0;
   overflow: hidden;
   white-space: nowrap;
-  animation: typeAndGone 2s steps(22, end);
-  border-right: 0.1em solid white;
+  animation: waitAndType 3s steps(22, end);
 }
 
 .console-run-result {
   overflow: hidden;
   white-space: nowrap;
-  animation: goneAndShow 2.2s steps(22, end);
 }
+
 @media (max-width: 824px) {
   * {
     font-size: 0.95em;
   }
-
-  .typewriter li,
-  .typewriter .question {
+  .typewriter li, .typewriter .question {
     animation: typing 2s steps(100, end);
   }
 }
 
+@keyframes waitAndType {
+  0%, 20% {
+    max-width: 0;
+    width: fit-content
+  }
+  100% {
+    max-width: 100%;
+    width: fit-content
+  }
+}
+
 @keyframes typing {
-  from { max-width: 0; width: fit-content }
-  to { max-width: 100%; width: fit-content }
+  from {
+    max-width: 0;
+    width: fit-content
+  }
+  to {
+    max-width: 100%;
+    width: fit-content
+  }
 }
 
-@keyframes typeAndGone {
-  0%, 10% { width: 1em; height: 1.5em }
-  65%,99% { width: 14.5em; height: 1.5em }
-  100% { width:0; height: 0 }
-}
-
-@keyframes goneAndShow {
-  0%, 100% { width: 0; height: 0; padding:0; margin:0; display: none }
-}
-
-.subject-property-name,
-.subject-property-value {
+.subject-property-name, .subject-property-value {
   font-size: 1.4em;
 }
 
@@ -140,6 +194,39 @@ body {
   font-weight: bolder;
 }
 
-.subject-property-value {
+.subject-property-value {}
+
+.ls-list td {
+  padding-right: 13px;
+}
+
+.console-input {
+  border: 0;
+  background: transparent;
+  outline: 0;
+  color: #c8c8c8;
+  margin-left: 13px;
+}
+
+.console-purple {
+  color: #c590ff;
+}
+.console-green {
+  color: #abff91;
+}
+.console-yellow {
+  color: #fffd45;
+  font-weight: bold;
+}
+
+.console-run {
+  padding-left:13px;
+}
+
+.terminal-command.visible {
+  display:flex;
+}
+
+.terminal-command > span {
 
 }

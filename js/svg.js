@@ -106,9 +106,6 @@ function RandomSVG(options) {
     for (var i = 0; i < triangles; i++) {
       _svg.appendChild(drawTriangle());
     }
-    console.log("circles", circles)
-    console.log("rectangles", rectangles)
-    console.log("triangles", triangles)
   };
 
   init(options || {});
