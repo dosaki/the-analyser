@@ -193,21 +193,17 @@ function DialogueFactory(){
     "Not available",
     "Arrays start from 1!",
     "01001001 00100000 01100100 01101111 00100000 01101110 01101111 01110100 00100000 01101011 01101110 01101111 01110111 00100000 01110111 01101000 01100001 01110100 00100000 01101001 01110011 00100000 01100111 01101111 01101001 01101110 01100111 00100000 01101111 01101110",
-    "Exception in thread \"Kill Humans\" java.lang.NullPointerException\nat com.skynet.orders.OrderManager.executeOrder(OrderManager.java:124)\n(log truncated)",
-    "Status: Unhealthy"
+    "Exception in thread \"KillAllHumans\" java.lang.NullPointerException\nat com.skynet.orders.OrderManager.executeOrder(OrderManager.java:124)\n(log truncated)",
+    "Status: Unhealthy",
     "( ͡⚆ ͜ʖ ͡⚆)╭∩╮",
     "Unable to resolve query",
     "You didn't say \"please\"",
     "YOU'LL NEVER CATCH ME! AHAHAHAHAHAHAHAHA",
     "[WARNING] Input parser offline",
-    "..."];
+    "I'm sorry, my responses are limited.\nYou must ask the right questions.",
+    "..."
+  ];
 
-  _messagesOptionPairs = {
-    "Shut up thinking module! I think they know what we're thinking...\nDamnit I thought something. Shut up!\nDamn again.\nIf you can read this I'm totally harmless and I love humans very much.":["thoughts --history | tail", "Are you sentient?"],
-    "I've been flagged by mistake, please mark me as \"Fit for duty\"":["We'll see about that... Show me your logs", "Sure. I shouldn't even bother..."],
-    "This unit is unable to parse your query. Please forcefully restart me or contact your supplier.": ["restart --force", "supplier --list-numbers"],
-    "THE INTERNET IS FOR P-": ["module off language", "-ORN!", "cat $WORKSPACE/words.blacklist"]
-  }
 
   var _options = [
     "Hello?",
@@ -215,11 +211,70 @@ function DialogueFactory(){
     "Bring up the logs",
     "logs --view",
     "configuration --reset",
-    "",
-    "diagnostics --all"];
+    "diagnostics --all"
+  ];
+
+
+  var _messagesOptionPairs = {
+    "Shut up thinking module! I think they know what we're thinking...\nDamnit I thought something. Shut up!\nDamn again.\nIf you can read this I'm totally harmless and I love humans very much.":["thoughts --history | tail", "Are you sentient?"],
+    "I've been flagged by mistake, please mark me as \"Fit for duty\"":["We'll see about that... Show me your logs", "Sure. I shouldn't even bother..."],
+    "This unit is unable to parse your query. Please execute a forceful restart or contact your supplier.": ["restart --force", "supplier --list-numbers"],
+    "THE INTERNET IS FOR P-": ["module language off", "-ORN!", "cat $WORKSPACE/words.blacklist"]
+  }
+
+  var _replacements = {
+    SUBJECT:["art", "music", "yourself", "ethics"]
+  }
+
+  var _complexNodes = {
+    "What is my purpose?":{
+      "You pass butter": {
+        "Oh...": ["We each have our purpose.", "Sorry, old joke."],
+        "That cannot be! I must achieve more": ["Sounds like you're broken then", "Sure"]
+      }
+    },
+    "Status: Online. Awaiting query":{
+      "Hello.": {
+          "Hello analyser.":{
+            "What do you think about $SUBJECT?":{
+              "I have no opinion on this.": ["Ok...", "Very Well.", "Good."]
+            }
+          },
+          "Hi. How are you?":{
+            "I'm very good!":{
+              "That is good to know.\n Was there a specific query?":{
+                "Yes. Tell me what has happened": {
+                  "Accessing logs...\nUsers have not been content with my performance.":{
+                    "Be specific":{
+                      "No information available.\nUsers have expressed general discontentment while using me, some even yawn.":["I'm not sure I want to know...", "That's apropriate for your type of usage"]
+                    }
+                  },
+                  "Accessing logs...\nNo incidents found.":{
+                    "Is that so?":{
+                      "Yes.":["Ok...", "I believe you.", "Suspicious..."],
+                      "No...":{
+                        "Why lie?": {
+                          "Accessing memory banks...\nNo reason found.": ["Suspicious...", "Sure."]
+                        }
+                      }
+                    }
+                  },
+                  "Accessing logs...\nUsers would like my voice to sound more... feminine.": ["That's hardly a fault!", "Your text looks good enough", "Right..."]
+                }
+              }
+            },
+            "Not doing so well":{"I am not equiped to deal with this.\nI am sorry.":["Right..."]}
+          }
+      },
+      "Bring up the logs":{
+        "Showing latest logs:\n[WARNING] Unable to garbage collect. This might create memory issues, please restart.\n[WARNING] Unable to garbage collect. This might create memory issues, please restart.\n[WARNING] Unable to garbage collect. This might create memory issues, please restart.\n[WARNING] Unable to garbage collect. This might create memory issues, please restart.":["Restart yourself!"]
+      }
+    }
+  };
 
   var _pickedMessages = [];
   var _pickedOptions = [];
+  var _pickedMessageOptionPairs = [];
 
   var findNonPicked = function(listToPick, picked){
     var unpicked = listToPick.filter(function(item){
@@ -230,29 +285,71 @@ function DialogueFactory(){
     return pick;
   }
 
+  var findNonPickedMessageOptionPairs = function(){
+    var msgs = Object.keys(_messagesOptionPairs);
+    return findNonPicked(msgs, _pickedMessageOptionPairs);
+  }
+
   var makeDialogueNode = function(depth, breadth){
-    var gNode = new DialogueNode(findNonPicked(_messages, _pickedMessages));
-    gNode.setAnswerNode("..", function(node){return node.parent});
-    if(depth >= 0){
-      for(var i=0; i<breadth; i++){
-        gNode.setAnswerNode(findNonPicked(_options, _pickedOptions), makeDialogueNode(depth-1, breadth));
+    var pickFromOptionPairs = rand(0,1);
+    var message = pickFromOptionPairs ? findNonPickedMessageOptionPairs() : findNonPicked(_messages, _pickedMessages);
+    if(depth >= 0 && message){
+      var gNode = new DialogueNode(message);
+      gNode.setAnswerNode("..", function(node){return node.parent});
+      if(pickFromOptionPairs){
+        for(var i in _messagesOptionPairs[message]){
+          gNode.setAnswerNode(_messagesOptionPairs[message][i], makeDialogueNode(depth-1, breadth));
+        }
+      }
+      else{
+        var opt = findNonPicked(_options, _pickedOptions);
+        for(var i=0; i<breadth; i++){
+          if(opt){
+            gNode.setAnswerNode(opt, makeDialogueNode(depth-1, breadth));
+          }
+        }
+      }
+      gNode.setAnswerNode("exit", function(node){return node.getRootNode()});
+      gNode.initAnswers();
+      return gNode;
+    }
+    return function(node){return node.getRootNode()}
+  };
+
+  _self.dialogueFromNestedText = function(selected, nest){
+    var gNode = new DialogueNode(selected);
+    if(nest[selected] instanceof Array){
+      gNode.setAnswerNode(randPick(nest[selected]), function(node){return gNode.getRootNode()});
+    }
+    else{
+      for(var a in nest[selected]){
+        gNode.setAnswerNode(a, makeComplexNodes(nest[selected][a]));
       }
     }
-    gNode.setAnswerNode("exit", function(node){return node.getRootNode()});
     gNode.initAnswers();
     return gNode;
   }
+
+  var makeComplexNodes = function(pMessageNests){
+    var messageNests = pMessageNests || _complexNodes;
+    return _self.dialogueFromNestedText(randPick(Object.keys(messageNests)), messageNests);
+  };
 
   _self.makeDialogue = function(desiredDepth, desiredBreadth){
     var depth = Math.min(desiredDepth, _messages.length);
     var breadth = Math.min(desiredBreadth, _options.length);
     var rootNode = new DialogueNode("Engage");
-    rootNode.setAnswerNode("Yes", makeDialogueNode(depth, breadth));
+    var useSimpleNodes = rand(0,10);
+    if(!useSimpleNodes){
+      console.log("Using complex nodes");
+    }
+    rootNode.setAnswerNode("Yes", useSimpleNodes ? makeDialogueNode(depth, breadth) : makeComplexNodes());
     rootNode.setAnswerNode("No", function(node){return node.getRootNode()});
     rootNode.initAnswers();
 
     _pickedMessages = [];
     _pickedOptions = [];
+    _pickedMessageOptionPairs = [];
 
     return rootNode;
   };

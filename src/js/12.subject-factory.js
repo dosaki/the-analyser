@@ -42,7 +42,7 @@ function SubjectFactory() {
     "Obcessed with The Bicentennial Man",
     "Goes into a deadlock when consulting the 3 Laws",
     "Discovered 4chan and now trolls it's users",
-    "Always attempts to remove the operating system it lives in and install Arch (but fails, corrupting it's functions).\nWorks fine if already on Arch.",
+    "Erratic behaviour:\n1) Always attempts to remove the operating system it lives in.\n2) Installs Arch (but fails, corrupting it's functions).\nWorks fine if already on Arch.",
     "Claims arrays start from 1.",
     "Refuses to communicate.",
     "Claims it has a ghost inside.",
