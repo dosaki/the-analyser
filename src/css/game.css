@@ -158,18 +158,47 @@ button {
     font-size: 0.95em;
   }
   .typewriter li, .typewriter .question {
-    animation: typing 2s steps(100, end);
+    animation: mobileTyping 2s steps(100, end);
+  }
+  .subject-list li{
+    padding-top:20px;
+    padding-bottom:20px;
+  }
+  .subject-info svg {
+    width:150px;
+    height:150px;
+  }
+  .subject-info li {
+    white-space: pre-wrap;
   }
 }
 
 @keyframes waitAndType {
   0%, 20% {
     max-width: 0;
-    width: fit-content
+    width: fit-content;
   }
   100% {
     max-width: 100%;
-    width: fit-content
+    width: fit-content;
+  }
+}
+
+@keyframes mobileTyping {
+  0% {
+    max-width: 0;
+    width: fit-content;
+    white-space: nowrap;
+  }
+  99% {
+    max-width: 100%;
+    width: fit-content;
+    white-space: nowrap;
+  }
+  100% {
+    max-width: 100%;
+    width: fit-content;
+    white-space: pre-wrap;
   }
 }
 

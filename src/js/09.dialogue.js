@@ -191,13 +191,31 @@ function DialogueFactory(){
   var _messages = [
     "Invalid permissions",
     "Not available",
+    "Arrays start from 1!",
+    "01001001 00100000 01100100 01101111 00100000 01101110 01101111 01110100 00100000 01101011 01101110 01101111 01110111 00100000 01110111 01101000 01100001 01110100 00100000 01101001 01110011 00100000 01100111 01101111 01101001 01101110 01100111 00100000 01101111 01101110",
+    "Exception in thread \"Kill Humans\" java.lang.NullPointerException\nat com.skynet.orders.OrderManager.executeOrder(OrderManager.java:124)\n(log truncated)",
+    "Status: Unhealthy"
+    "( ͡⚆ ͜ʖ ͡⚆)╭∩╮",
+    "Unable to resolve query",
+    "You didn't say \"please\"",
+    "YOU'LL NEVER CATCH ME! AHAHAHAHAHAHAHAHA",
+    "[WARNING] Input parser offline",
     "..."];
+
+  _messagesOptionPairs = {
+    "Shut up thinking module! I think they know what we're thinking...\nDamnit I thought something. Shut up!\nDamn again.\nIf you can read this I'm totally harmless and I love humans very much.":["thoughts --history | tail", "Are you sentient?"],
+    "I've been flagged by mistake, please mark me as \"Fit for duty\"":["We'll see about that... Show me your logs", "Sure. I shouldn't even bother..."],
+    "This unit is unable to parse your query. Please forcefully restart me or contact your supplier.": ["restart --force", "supplier --list-numbers"],
+    "THE INTERNET IS FOR P-": ["module off language", "-ORN!", "cat $WORKSPACE/words.blacklist"]
+  }
 
   var _options = [
     "Hello?",
     "What's your problem?",
     "Bring up the logs",
     "logs --view",
+    "configuration --reset",
+    "",
     "diagnostics --all"];
 
   var _pickedMessages = [];

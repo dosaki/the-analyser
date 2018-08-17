@@ -18,9 +18,8 @@ rm -rf ${DIST}
 mkdir -p ${BUILD}
 mkdir -p ${DIST}
 
-cp -r ./src/assets ${BUILD}/
 mkdir -p ${BUILD}/css
- uglifycss ./src/css/* > ${BUILD}/css/game.css
+uglifycss ./src/css/* > ${BUILD}/css/game.css
 
 mkdir -p ${BUILD}/js
 cat ./src/index.html | grep -v "<script src=\"js/" | grep -v "</html>" | grep -v "</body>" > ${BUILD}/index.html
@@ -29,8 +28,9 @@ echo "    <script src='js/bundle.js'></script>" >> ${BUILD}/index.html
 echo "  </body>" >> ${BUILD}/index.html
 echo "</html>" >> ${BUILD}/index.html
 
-zip -r decomissioner.zip ${BUILD}
-mv decomissioner.zip ${DIST}
+cd ${BUILD}
+zip -r ${DIST}/decomissioner.zip .
+cd ${DIR}
 rm -rf ${BUILD}
 
 size=`du -b dist/decomissioner.zip | awk '{print $1}'`
