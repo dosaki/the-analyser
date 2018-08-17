@@ -22,7 +22,6 @@ function SubjectFactory() {
     "Self-driving agent",
     "Crop harvester & carer",
     "[CLASSIFIED]",
-    "",
     "Personal assistant",
     "Automated technician",
     "General purpose virtual intelligence",
@@ -47,8 +46,7 @@ function SubjectFactory() {
     "Refuses to communicate.",
     "Claims it has a ghost inside.",
     "Unable to function when near water",
-    "Unresponsive after reverse engineering and rebuilding itself without null protection.",
-    ""];
+    "Unresponsive after reverse engineering and rebuilding itself without null protection."];
 
   _self.makeRandomSubject = function() {
     var subject = new Subject(makeName(), 'Online', makePurpose(), makeReason(), new Dialogue(DIALOGUE_FACTORY.makeDialogue(rand(2,4), rand(2,3))));

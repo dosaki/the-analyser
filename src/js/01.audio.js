@@ -5,7 +5,7 @@ var _tone = function(freq){
   o.frequency.value = freq;
   o.connect(g);
   g.connect(_AUDIOCTX.destination);
-  g.gain.value = 0.01;
+  g.gain.value = 0.25;
   o.start(0);
   var x = 0.15;
   g.gain.exponentialRampToValueAtTime(0.00001, _AUDIOCTX.currentTime + x);
