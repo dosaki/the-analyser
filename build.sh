@@ -37,5 +37,5 @@ size=`du -b dist/decomissioner.zip | awk '{print $1}'`
 if [[ $((size - 13312)) -gt 0 ]]; then
   echo -e "\e[93m\e[1m[WARNING] TOO BIG! File size is ${size}.\e[39m"
 else
-  echo "\e[92m\e[1m[SUCCESS] File size under 13k: ${size}.\e[39m"
+  echo -e "\e[92m\e[1m[SUCCESS] File size under 13k: ${size}.\e[39m"
 fi
