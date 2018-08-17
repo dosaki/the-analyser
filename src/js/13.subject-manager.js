@@ -1,4 +1,4 @@
-function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContainerSelector, subjectList) {
+function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContainerSelector, subjectList, maxAdditional) {
 
   'use strict';
 
@@ -127,7 +127,7 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     });
   };
 
-  var init = function(subjectInfoSelector, subjectListSelector, dialogueContainerSelector, subjectList) {
+  var init = function(subjectInfoSelector, subjectListSelector, dialogueContainerSelector, subjectList, maxAdditional) {
     subjects = subjectList;
     elementSelector = subjectInfoSelector;
     listSelector = subjectListSelector;
@@ -135,7 +135,8 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     isDirty = true;
     listIsDirty = true;
 
-    var additionalSubjects = rand(6,12);
+    var additionalSubjects = rand(6,Math.max(maxAdditional || 6, 6));
+    console.log(additionalSubjects);
     for(var i=0; i<additionalSubjects; i++){
       subjects.push(SUBJECT_FACTORY.makeRandomSubject());
     }
@@ -144,5 +145,5 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     });
   }
 
-  init(subjectInfoSelector, subjectListSelector, dialogueContainerSelector, subjectList);
+  init(subjectInfoSelector, subjectListSelector, dialogueContainerSelector, subjectList, maxAdditional);
 };

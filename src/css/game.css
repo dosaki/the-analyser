@@ -73,6 +73,7 @@ button {
 .game-container {
   display: flex;
   flex: 1 1 auto;
+  height: 0;
 }
 
 .subject-interaction {
@@ -85,6 +86,13 @@ button {
   padding: 5px;
   background: #2f2f2f;
   border-right: 1px solid black;
+  display: flex;
+  flex-direction: column;
+}
+
+.subject-list {
+  flex-grow: 1;
+  overflow: auto;
 }
 
 .subject-list li {
@@ -143,11 +151,6 @@ button {
   overflow: hidden;
   white-space: nowrap;
   animation: waitAndType 3s steps(22, end);
-}
-
-.console-run-result {
-  overflow: hidden;
-  white-space: nowrap;
 }
 
 @media (max-width: 824px) {
@@ -220,4 +223,17 @@ button {
 
 .terminal-command.visible {
   display:flex;
+}
+
+*::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+*::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px #171717;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #7c8890;
+  outline: 1px solid slategrey;
 }
