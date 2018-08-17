@@ -1,8 +1,11 @@
 var rand = function(min, max) {
-  return Math.floor(Math.random() * ((max || 200) - (min || 0))) + (min || 0);
+  return Math.floor(Math.random() * ((max || 100) - (min || 0))) + (min || 0);
 };
 
-var randWord = function(list) {
+var randPick = function(list) {
+  if (!list || list.length === 0) {
+    return "";
+  }
   var index = Math.floor(Math.random() * list.length);
   return list[index];
 };

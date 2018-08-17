@@ -78,6 +78,17 @@ function DialogueNode(questionText, answersMap, onSelectFunction) {
     return nodeHTML;
   };
 
+  _self.initAnswers = function(){
+    var _textAnswers = Object.keys(_answers);
+    for (var k in _textAnswers) {
+      if (_answers[_textAnswers[k]]) {
+        if(!_answers[_textAnswers[k]].parent && _answers[_textAnswers[k]] instanceof DialogueNode){
+          _answers[_textAnswers[k]].addParent(_self);
+        }
+      }
+    };
+  }
+
   var makeAnswerElement = function(text, click, mouseover){
     var answer = document.createElement("li");
     answer.className = "answer";
@@ -106,20 +117,13 @@ function DialogueNode(questionText, answersMap, onSelectFunction) {
   };
 
   var init = function(q, a, s){
-    _self.question = q;
-    _answers = a;
+    _self.question = q || "";
+    _answers = a || {};
     _self.chosenAnswer = null;
     _self.parent = null;
-    _onSelect = s;
+    _onSelect = s || null;
 
-    var _textAnswers = Object.keys(_answers);
-    for (var k in _textAnswers) {
-      if (_answers[_textAnswers[k]]) {
-        if(!_answers[_textAnswers[k]].parent && _answers[_textAnswers[k]] instanceof DialogueNode){
-          _answers[_textAnswers[k]].addParent(_self);
-        }
-      }
-    };
+
   };
 
   init(questionText, answersMap, onSelectFunction);
@@ -143,6 +147,10 @@ function Dialogue(rootNode) {
     container.appendChild(nodeElement);
   };
 
+  _self.clear = function(){
+    isDirty = true;
+  }
+
   _self.selectNode = function(node) {
     if (node !== _self.currentNode) {
       _self.previousNode = _self.currentNode;
@@ -158,6 +166,12 @@ function Dialogue(rootNode) {
     }
   };
 
+  _self.setRootNode = function(rootNode){
+    _self.rootNode = rootNode;
+    _self.currentNode = rootNode;
+    isDirty = true;
+  }
+
   var init = function(rootNode){
     _self.rootNode = rootNode;
     _self.currentNode = rootNode;
@@ -167,3 +181,63 @@ function Dialogue(rootNode) {
 
   init(rootNode);
 };
+
+function DialogueFactory(){
+
+  'use strict';
+
+  var _self = this;
+
+  var _messages = [
+    "Invalid permissions",
+    "Not available",
+    "..."];
+
+  var _options = [
+    "Hello?",
+    "What's your problem?",
+    "Bring up the logs",
+    "logs --view",
+    "diagnostics --all"];
+
+  var _pickedMessages = [];
+  var _pickedOptions = [];
+
+  var findNonPicked = function(listToPick, picked){
+    var unpicked = listToPick.filter(function(item){
+      return picked.indexOf(item) === -1;
+    })
+    var pick = randPick(unpicked);
+    picked.push(pick);
+    return pick;
+  }
+
+  var makeDialogueNode = function(depth, breadth){
+    var gNode = new DialogueNode(findNonPicked(_messages, _pickedMessages));
+    gNode.setAnswerNode("..", function(node){return node.parent});
+    if(depth >= 0){
+      for(var i=0; i<breadth; i++){
+        gNode.setAnswerNode(findNonPicked(_options, _pickedOptions), makeDialogueNode(depth-1, breadth));
+      }
+    }
+    gNode.setAnswerNode("exit", function(node){return node.getRootNode()});
+    gNode.initAnswers();
+    return gNode;
+  }
+
+  _self.makeDialogue = function(desiredDepth, desiredBreadth){
+    var depth = Math.min(desiredDepth, _messages.length);
+    var breadth = Math.min(desiredBreadth, _options.length);
+    var rootNode = new DialogueNode("Engage");
+    rootNode.setAnswerNode("Yes", makeDialogueNode(depth, breadth));
+    rootNode.setAnswerNode("No", function(node){return node.getRootNode()});
+    rootNode.initAnswers();
+
+    _pickedMessages = [];
+    _pickedOptions = [];
+
+    return rootNode;
+  };
+};
+
+DIALOGUE_FACTORY = new DialogueFactory();

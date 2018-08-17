@@ -73,7 +73,7 @@ function Terminal(username) {
       _c(rand(1, 7)) +
       _c("root") +
       _c("analysts") +
-      _c(rand(4, 99) + "." + rand(0, 9) + randWord(["", "K", "M"])) +
+      _c(rand(4, 99) + "." + rand(0, 9) + randPick(["", "K", "M"])) +
       _c(date + " 00:0" + rand(0, 2) + ":" + (seconds < 10 ? "0" + seconds : seconds)) +
       _c(fileName);
   };

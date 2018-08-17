@@ -39,6 +39,10 @@ function Subject(name, status, purpose, notes, conversation){
     return _isFlaggedForDecommission;
   };
 
+  _self.clear = function(){
+    _self.conversation.clear();
+  }
+
   var makePropertyElement = function(propertyName, property){
     var element = document.createElement('li');
     var propertyNameElement = document.createElement('span');

@@ -1,38 +1,3 @@
-var SUBJECTS = [
-  new Subject('Testing', 'Online', 'Component Testing', 'Too many false positives', new Dialogue(new DialogueNode("Engage?", {
-    "Yes": new DialogueNode("Status: Online", {
-      "Hello?": new DialogueNode("...", {
-        "Ok...": function(node){return node.parent}
-      }),
-      "Run diagnostics": new DialogueNode("...", {
-        "Something's wrong...": function(node){return node.parent},
-        "diagnosics --all": new DialogueNode("Logic module: Healthy\nMessage service: Healthy\nLog Dump: 13kb\nNatural language processing: Offline", {
-          "..": function(node){return node.parent},
-          "module natlang start": new DialogueNode("Starting natlang module...\nERROR: Unknown issue.", {
-            "..": function(node){return node.parent},
-            "exit": function(node){return node.getRootNode()}
-          }),
-          "exit": function(node){return node.getRootNode()},
-        })
-      })
-    }),
-    "No": function(node){return node}
-  })))
-];
-
-function SubjectFactory(){
-
-  'use strict';
-
-  var makeName = function(){
-
-  }
-
-  _self.makeRandomSubject = function(){
-
-  }
-}
-
 function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContainerSelector, subjectList) {
 
   'use strict';
@@ -44,10 +9,10 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
   _self.previousSubject = null;
   _self.previousSubjectListElement = null;
 
-  var subjects = subjectList;
-  var elementSelector = subjectInfoSelector;
-  var listSelector = subjectListSelector;
-  var dialogueSelector = dialogueContainerSelector;
+  var subjects = [];
+  var elementSelector = "";
+  var listSelector = "";
+  var dialogueSelector = "";
   var isDirty = true;
   var listIsDirty = true;
 
@@ -60,17 +25,17 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     }
   };
 
-  _self.wipeSubjectAreas = function(){
-      var info = document.querySelector(elementSelector);
-      info.innerHTML = "";
-      var dialogue = document.querySelector(dialogueSelector);
-      dialogue.innerHTML = "";
+  _self.wipeSubjectAreas = function() {
+    var info = document.querySelector(elementSelector);
+    info.innerHTML = "";
+    var dialogue = document.querySelector(dialogueSelector);
+    dialogue.innerHTML = "";
   };
 
   _self.highlightSubject = function(element) {
     if (element) {
       if (_self.previousSubjectListElement && _self.previousSubjectListElement.classList.contains("selected")) {
-        _self.currentSubjectListElement.classList.remove("selected");
+        _self.previousSubjectListElement.classList.remove("selected");
       }
       if (!element.classList.contains("selected")) {
         element.classList.add("selected");
@@ -84,6 +49,10 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
       _self.previousSubjectListElement = _self.currentSubjectListElement;
       _self.currentSubject = subject;
       _self.currentSubjectListElement = element;
+      _self.wipeSubjectAreas();
+      if(_self.previousSubject){
+        _self.previousSubject.conversation.clear();
+      }
       isDirty = true;
     }
   };
@@ -107,49 +76,70 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
   _self.renderList = function() {
     var container = document.querySelector(listSelector);
     var list = document.createElement('ul');
-    for (var i in subjectsToAnalyse()) {
+    var eligibleSubjects = subjectsToAnalyse();
+    for (var i in eligibleSubjects) {
       var subjectLi = document.createElement('li');
-      subjectLi.innerHTML = subjects[i].name;
+      subjectLi.innerHTML = eligibleSubjects[i].name;
       subjectLi.addEventListener('mouseover', function(e) {
         AUDIO.hover.play();
       });
-      subjectLi.addEventListener('click', function(e) {
-        AUDIO.select.play();
-        _self.selectSubject(subjects[i], e.target);
-      });
+      (function(s){
+        subjectLi.addEventListener('click', function(e) {
+          AUDIO.select.play();
+          _self.selectSubject(s, e.target);
+        })
+      })(eligibleSubjects[i]);
       list.appendChild(subjectLi);
     }
     container.innerHTML = "";
     container.appendChild(list);
-  }
+  };
 
   _self.removeSubject = function(subject) {
     listIsDirty = true;
+    subject.clear();
     var index = subjects.indexOf(subject);
     if (index > -1) {
       array.splice(index, 1);
     }
     return subject;
-  }
+  };
 
   _self.addSubject = function(subject) {
     listIsDirty = true;
     subjects.push(subject);
-  }
+  };
 
-  _self.decomissionCurrent = function(){
+  _self.decomissionCurrent = function() {
     _self.previousSubject = _self.currentSubject;
     _self.previousSubjectListElement = _self.currentSubjectListElement;
     _self.currentSubject.flagForDecommission();
+    _self.currentSubject.clear();
     _self.currentSubject = null;
     _self.currentSubjectListElement = null;
-    _self.renderList();
     _self.wipeSubjectAreas();
-  }
+    listIsDirty = true;
+  };
 
-  var subjectsToAnalyse = function(){
-    return subjects.filter(function(s){
+  var subjectsToAnalyse = function() {
+    return subjects.filter(function(s) {
       return !s.isFlaggedForDecommission();
     });
+  };
+
+  var init = function(subjectInfoSelector, subjectListSelector, dialogueContainerSelector, subjectList) {
+    subjects = subjectList;
+    elementSelector = subjectInfoSelector;
+    listSelector = subjectListSelector;
+    dialogueSelector = dialogueContainerSelector;
+    isDirty = true;
+    listIsDirty = true;
+
+    var additionalSubjects = rand(6,12);
+    for(var i=0; i<additionalSubjects; i++){
+      subjects.push(SUBJECT_FACTORY.makeRandomSubject());
+    }
   }
+
+  init(subjectInfoSelector, subjectListSelector, dialogueContainerSelector, subjectList);
 };
