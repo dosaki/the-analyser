@@ -121,7 +121,7 @@ function Terminal(username) {
     output.appendChild(_l("This help", {
       "padding-left": "26px;"
     }));
-    output.appendChild(_l("decommission &lt;analyise&gt; &lt;list&gt;", {
+    output.appendChild(_l("decommission &lt;analyse&gt; &lt;list&gt;", {
       "padding-left": "13px;"
     }));
     output.appendChild(_l("Start the interactible CLI tool.", {
