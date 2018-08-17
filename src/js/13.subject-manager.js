@@ -139,6 +139,9 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     for(var i=0; i<additionalSubjects; i++){
       subjects.push(SUBJECT_FACTORY.makeRandomSubject());
     }
+    subjects.sort(function(){
+      return rand(-1,1);
+    });
   }
 
   init(subjectInfoSelector, subjectListSelector, dialogueContainerSelector, subjectList);
