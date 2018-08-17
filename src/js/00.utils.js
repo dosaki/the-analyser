@@ -6,14 +6,12 @@ var randPick = function(list) {
   if (!list || list.length === 0) {
     return "";
   }
-  var index = Math.floor(Math.random() * list.length);
-  return list[index];
+  return list[Math.floor(Math.random() * list.length)];
 };
 
 //Thank you https://stackoverflow.com/questions/1484506/random-color-generator
 function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
+  var letters = '0123456789ABCDEF', color = '#';
   for (var i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }

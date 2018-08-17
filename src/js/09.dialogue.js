@@ -49,7 +49,7 @@ function DialogueNode(questionText, answersMap, onSelectFunction) {
   _self.questionAsHtml = function() {
     var question = document.createElement("div");
     question.className = "question";
-    question.innerHTML = HTMLIZE.newlines.toParagraphs(_self.question);
+    question.innerHTML = HTMLIZE.newlines.toBRs(_self.question);
     return question;
   };
 
@@ -92,7 +92,7 @@ function DialogueNode(questionText, answersMap, onSelectFunction) {
   var makeAnswerElement = function(text, click, mouseover){
     var answer = document.createElement("li");
     answer.className = "answer";
-    answer.innerHTML = HTMLIZE.newlines.toParagraphs(text);
+    answer.innerHTML = HTMLIZE.newlines.toBRs(text);
     (function(a) {
       answer.addEventListener('mouseover', mouseover || function(e) {
         AUDIO.hover();

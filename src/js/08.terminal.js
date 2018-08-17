@@ -50,10 +50,14 @@ function Terminal(username) {
     }
   };
 
+  var colour = function(string, colour) {
+    return "<span class='console-" + colour + "'>" + string + "</span>";
+  };
+
   var commandForPrinting = function(c) {
     var commandLine = document.createElement("div");
     var userHost = document.createElement("span");
-    userHost.innerHTML = "<span class='console-purple'>" + _username + "</span>" + "<span class='console-yellow'>@</span>" + "<span class='console-green'>" + _host + "</span> <span class='console-yellow'>" + _dir + "</span> <span class='console-purple'>$</span> ";
+    userHost.innerHTML = colour(_username, 'purple') + colour('@', 'yellow') + colour(_host, 'green')+ colour(" "+_dir, 'yellow')+colour(' $','purple');
     var command = document.createElement("span");
     command.className = "console-run";
     command.innerHTML = c;
@@ -111,10 +115,18 @@ function Terminal(username) {
     output.appendChild(_l("Select a subject from the list on the left, diagnose it to figure out what's wrong with it."));
     output.appendChild(_l("If it's salvageable, flag it for fixing, otherwise mark it for decomission."));
     output.appendChild(_l("Usage:"));
-    output.appendChild(_l("decommission &lt;help&gt;", {"padding-left": "13px;"}));
-    output.appendChild(_l("This help", {"padding-left": "26px;"}));
-    output.appendChild(_l("decommission &lt;analyise&gt; &lt;list&gt;", {"padding-left": "13px;"}));
-    output.appendChild(_l("Start the interactible CLI tool.", {"padding-left": "26px;"}));
+    output.appendChild(_l("decommission &lt;help&gt;", {
+      "padding-left": "13px;"
+    }));
+    output.appendChild(_l("This help", {
+      "padding-left": "26px;"
+    }));
+    output.appendChild(_l("decommission &lt;analyise&gt; &lt;list&gt;", {
+      "padding-left": "13px;"
+    }));
+    output.appendChild(_l("Start the interactible CLI tool.", {
+      "padding-left": "26px;"
+    }));
     return output;
   };
 

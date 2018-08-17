@@ -1,8 +1,7 @@
-var _AUDIO = document.querySelector('[audiofxselect]');
 var _AUDIOCTX = new AudioContext();
 var AUDIO = {
   select: function() {
-    _AUDIO.play();
+    document.querySelector('[audiofxselect]').play();
   },
   hover: function() {
     //Thanks to http://marcgg.com/blog/2016/11/01/javascript-audio/
@@ -13,7 +12,7 @@ var AUDIO = {
     g.connect(_AUDIOCTX.destination);
     g.gain.value = 0.01;
     o.start(0);
-    var x = 0.3;
+    var x = 0.15;
     g.gain.exponentialRampToValueAtTime(0.00001, _AUDIOCTX.currentTime + x);
   }
 }

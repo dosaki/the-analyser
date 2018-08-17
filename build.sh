@@ -19,7 +19,9 @@ mkdir -p ${BUILD}
 mkdir -p ${DIST}
 
 cp -r ./src/assets ${BUILD}/
-cp -r ./src/css ${BUILD}/
+mkdir -p ${BUILD}/css
+ uglifycss ./src/css/* > ${BUILD}/css/game.css
+
 mkdir -p ${BUILD}/js
 cat ./src/index.html | grep -v "<script src=\"js/" | grep -v "</html>" | grep -v "</body>" > ${BUILD}/index.html
 uglifyjs ./src/js/* > ${BUILD}/js/bundle.js

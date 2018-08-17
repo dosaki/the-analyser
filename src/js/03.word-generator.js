@@ -4,17 +4,16 @@ function WordGenerator(words, syllableSize) {
 
   var _self = this;
 
-  var _words = [];
-  var _syllableSize = 2;
+  var _words = words;
+  var _syllableSize = syllableSize;
   var _nextByCharacter = {};
 
   _self.generate = function(wordLength, capitalize) {
-    var _capitalize = capitalize || false;
     var generatedWord = randPick("qwertyuiopasdfghjklzxcvbnm");
     while(generatedWord.length <= wordLength) {
       generatedWord += randPick(_nextByCharacter[generatedWord[generatedWord.length - 1]]);
     }
-    return _capitalize ? generatedWord[0].toUpperCase() + generatedWord.substr(1) : generatedWord;
+    return capitalize ? generatedWord[0].toUpperCase() + generatedWord.substr(1) : generatedWord;
   };
 
   var buildOptionsForWord = function(word, groupSize, storage) {
@@ -27,14 +26,11 @@ function WordGenerator(words, syllableSize) {
     }
   }
 
-  var init = function(words, syllableSize){
-    _words = words;
-    _syllableSize = syllableSize;
-
+  var init = function(){
     for (var w in _words) {
       buildOptionsForWord(_words[w], _syllableSize, _nextByCharacter);
     }
   };
 
-  init(words, syllableSize);
+  init();
 }

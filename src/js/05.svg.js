@@ -16,7 +16,7 @@ function RandomSVG(options) {
     return _svg;
   };
 
-  var drawRect = function() {
+  var rect = function() {
     return drawShape('rect', {
       x: rand(),
       y: rand(),
@@ -29,7 +29,7 @@ function RandomSVG(options) {
     })
   };
 
-  var drawCircle = function() {
+  var circle = function() {
     return drawShape('circle', {
       cx: rand(),
       cy: rand(),
@@ -41,14 +41,14 @@ function RandomSVG(options) {
     })
   };
 
-  var drawTriangle = function() {
+  var tria = function() {
     var x = rand();
     var y = rand();
-    var size = Math.floor(_options.max_size*(2/3));
+    var size = Math.floor(_options.maxSize*(2/3));
     return drawShape('polygon', {
       points: x + "," + y + " " +
-        (x + rand(-size, size)) + "," + y + rand(-size, size) + " " +
-        (x + rand(-size, size)) + "," + y + rand(-size, size),
+        (x + rand(-size, size)) + "," + (y + rand(-size, size)) + " " +
+        (x + rand(-size, size)) + "," + (y + rand(-size, size)),
       opacity: Math.random(),
       fill: getRandomColor(),
       stroke: getRandomColor(),
@@ -57,7 +57,7 @@ function RandomSVG(options) {
   }
 
   var drawShape = function(shape, props) {
-    var shape = document.createElementNS(_constants.SVGNS, shape);
+    var s = document.createElementNS(_constants.SVGNS, shape);
 
     for (var key in props) {
       if (props.hasOwnProperty(key) && props[key] !== undefined) {
@@ -69,10 +69,10 @@ function RandomSVG(options) {
         } else {
           value = props[key];
         }
-        shape.setAttributeNS(null, key, value);
+        s.setAttributeNS(null, key, value);
       }
     }
-    return shape;
+    return s;
   };
 
   var init = function(options) {
@@ -94,17 +94,17 @@ function RandomSVG(options) {
 
     var circles = rand(1, _options.maxCircles);
     for (var i = 0; i < circles; i++) {
-      _svg.appendChild(drawCircle());
+      _svg.appendChild(circle());
     }
 
     var rectangles = rand(0, _options.maxRectangles);
     for (var i = 0; i < rectangles; i++) {
-      _svg.appendChild(drawRect());
+      _svg.appendChild(rect());
     }
 
     var triangles = rand(0, _options.maxTriangles);
     for (var i = 0; i < triangles; i++) {
-      _svg.appendChild(drawTriangle());
+      _svg.appendChild(tria());
     }
   };
 

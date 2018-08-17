@@ -1,17 +1,13 @@
 * {
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 
 html, body {
   width: 100%;
   height: 100%;
 }
-
-ul, li {
-  list-style: none;
-}
-
 body {
   background: #404040;
   color: #c8c8c8;
@@ -23,27 +19,27 @@ body {
   outline: 0;
 }
 
-.splash-logo svg>circle {
+.splash-logo circle {
   stroke: red;
 }
 
-.splash-logo svg>rect {
+.splash-logo rect {
   fill: red;
 }
 
-.splash-logo:hover svg>circle {
+.splash-logo:hover circle {
   stroke: #87b32a;
 }
 
-.splash-logo:hover svg>rect {
+.splash-logo:hover rect {
   fill: #87b32a;
 }
 
-.splash-logo:active svg>circle {
+.splash-logo:active circle {
   stroke: #11ff00;
 }
 
-.splash-logo:active svg>rect {
+.splash-logo:active rect {
   fill: #11ff00;
 }
 
@@ -55,7 +51,6 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  1
 }
 
 .hidden {
@@ -225,8 +220,4 @@ button {
 
 .terminal-command.visible {
   display:flex;
-}
-
-.terminal-command > span {
-
 }
