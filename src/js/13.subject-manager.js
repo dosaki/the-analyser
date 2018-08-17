@@ -81,11 +81,11 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
       var subjectLi = document.createElement('li');
       subjectLi.innerHTML = eligibleSubjects[i].name;
       subjectLi.addEventListener('mouseover', function(e) {
-        AUDIO.hover.play();
+        AUDIO.hover();
       });
       (function(s){
         subjectLi.addEventListener('click', function(e) {
-          AUDIO.select.play();
+          AUDIO.select();
           _self.selectSubject(s, e.target);
         })
       })(eligibleSubjects[i]);

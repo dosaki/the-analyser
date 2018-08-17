@@ -61,7 +61,7 @@ function DialogueNode(questionText, answersMap, onSelectFunction) {
       answersContainerElement.appendChild(makeAnswerElement(_textAnswers[k]));
     }
     answersContainerElement.appendChild(makeAnswerElement("Decomission", function(e){
-      AUDIO.select.play();
+      AUDIO.select();
       SUBJECT_MANAGER.decomissionCurrent();
       if (_onSelect && typeof _onSelect === "function") {
         _onSelect(_self);
@@ -95,10 +95,10 @@ function DialogueNode(questionText, answersMap, onSelectFunction) {
     answer.innerHTML = HTMLIZE.newlines.toParagraphs(text);
     (function(a) {
       answer.addEventListener('mouseover', mouseover || function(e) {
-        AUDIO.hover.play();
+        AUDIO.hover();
       });
       answer.addEventListener('click', click || function(e) {
-        AUDIO.select.play();
+        AUDIO.select();
         SUBJECT_MANAGER.currentSubject.conversation.selectNode(_self.getAnswerNode(a));
         if (_onSelect && typeof _onSelect === "function") {
           _onSelect(_self);

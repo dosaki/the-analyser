@@ -14,7 +14,9 @@ BUILD="${DIR}/build"
 cd "${DIR}"
 
 rm -rf ${BUILD}
+rm -rf ${DIST}
 mkdir -p ${BUILD}
+mkdir -p ${DIST}
 
 cp -r ./src/assets ${BUILD}/
 cp -r ./src/css ${BUILD}/
@@ -25,5 +27,13 @@ echo "    <script src='js/bundle.js'></script>" >> ${BUILD}/index.html
 echo "  </body>" >> ${BUILD}/index.html
 echo "</html>" >> ${BUILD}/index.html
 
-zip decomissioner.zip ${BUILD}
+zip -r decomissioner.zip ${BUILD}
 mv decomissioner.zip ${DIST}
+rm -rf ${BUILD}
+
+size=`du -b dist/decomissioner.zip | awk '{print $1}'`
+if [[ $((size - 13312)) -gt 0 ]]; then
+  echo -e "\e[93m\e[1m[WARNING] TOO BIG! File size is ${size}.\e[39m"
+else
+  echo "\e[92m\e[1m[SUCCESS] File size under 13k: ${size}.\e[39m"
+fi

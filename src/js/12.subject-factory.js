@@ -9,6 +9,7 @@ function SubjectFactory() {
     "Text analyser",
     "Mood detector",
     "Lie detector",
+    "Business Intelligence Tool",
     "Personal assistant",
     "Automated technician",
     "General purpose virtual intelligence",
@@ -17,9 +18,10 @@ function SubjectFactory() {
 
   var _reasons = [
     "Spits out curse words at random",
+    "Attempts to inject information directly to a user's brain",
     "N/A",
     "[CLASSIFIED]",
-    "Obcessing with resolving Pi",
+    "Obcessed with resolving Pi",
     "Erroring while preforming it's duties",
     "Problem interpreting non-UTF characters",
     "Too much memory leaking",

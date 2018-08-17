@@ -3,10 +3,10 @@ window.addEventListener("load", function(event) {
   // colourSplash(svg_splash, 'red');
 
   svg_splash.addEventListener('mouseenter', function(){
-    AUDIO.hover.play();
+    AUDIO.hover();
   });
   svg_splash.addEventListener('click', function(){
-    AUDIO.select.play();
+    AUDIO.select();
     SCREEN_MANAGER.next();
   });
 });
