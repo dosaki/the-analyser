@@ -58,11 +58,11 @@ function SubjectFactory() {
   }
 
   var makePurpose = function() {
-    return randPick(_purposes);
+    return HTMLIZE.newlines.toBRs(randPick(_purposes));
   }
 
   var makeReason = function() {
-    return randPick(_reasons);
+    return HTMLIZE.newlines.toBRs(randPick(_reasons));
   }
 
   var init = function() {
