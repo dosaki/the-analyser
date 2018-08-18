@@ -340,9 +340,6 @@ function DialogueFactory(){
     var breadth = Math.min(desiredBreadth, _options.length);
     var rootNode = new DialogueNode("Engage");
     var useSimpleNodes = rand(0,10);
-    if(!useSimpleNodes){
-      console.log("Using complex nodes");
-    }
     rootNode.setAnswerNode("Yes", useSimpleNodes ? makeDialogueNode(depth, breadth) : makeComplexNodes());
     rootNode.setAnswerNode("No", function(node){return node.getRootNode()});
     rootNode.initAnswers();

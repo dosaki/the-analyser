@@ -1,62 +1,64 @@
+<!DOCTYPE html>
+
 <html>
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="css/game.css" rel="stylesheet" type="text/css" />
-  <title>$ decommission --analyse</title>
-</head>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/game.css" rel="stylesheet" type="text/css" />
+    <title>$ decommission --analyse</title>
+  </head>
 
-<body>
-  <div screen="0" class="screen">
-    <button splash_button class="splash-logo" goto="1">
-        <svg xmlns:xlink="http://www.w3.org/2000/xmlns/" width="300" height="300" viewbox="0 0 300 300" style="background-color:transparent">
-          <filter id="blur">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="5" />
-          </filter>
-          <circle cx="150" cy="150" r="100" fill="transparent" stroke-width="6" filter="url(#blur)"></circle>
-          <rect x="147" y="25" width="6"  fill="transparent" height="102" filter="url(#blur)"></rect>
-          <circle cx="150" cy="150" r="100" fill="transparent" stroke-width="5"></circle>
-          <rect x="147.5" y="25" width="5" fill="transparent" height="100"></rect>
-        </svg>
-      </button>
-  </div>
-  <div screen="1" class="screen hidden">
-  </div>
-  <div screen="2" class='screen hidden'>
-    <div class='title console-run-result'>
-      <h1>decommission --analyse</h1>
+  <body>
+    <div screen="0" class="screen">
+      <button splash_button class="splash-logo" goto="1">
+          <svg xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="300" viewbox="0 0 300 300" style="background-color:transparent">
+            <filter id="blur">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="5"></feGaussianBlur>
+            </filter>
+            <circle cx="150" cy="150" r="100" fill="transparent" stroke-width="6" filter="url(#blur)"></circle>
+            <rect x="147" y="25" width="6"  fill="transparent" height="102" filter="url(#blur)"></rect>
+            <circle cx="150" cy="150" r="100" fill="transparent" stroke-width="5"></circle>
+            <rect x="147.5" y="25" width="5" fill="transparent" height="100"></rect>
+          </svg>
+        </button>
     </div>
-    <div class='game-container console-run-result' game_container>
-      <div class='subject-list-window'>
-        <h2>subjects:</h2>
-        <div subject_list_window class="subject-list"></div>
+    <div screen="1" class="screen hidden">
+    </div>
+    <div screen="2" class='screen hidden'>
+      <div class='title console-run-result'>
+        <h1>decommission --analyse</h1>
       </div>
-      <div class='subject-interaction typewriter' subject_interaction>
-        <div subject_info_window class="subject-info"></div>
-        <div dialogue_window class="dialog-box"></div>
+      <div class='game-container console-run-result' game_container>
+        <div class='subject-list-window'>
+          <h2>subjects:</h2>
+          <div subject_list_window class="subject-list"></div>
+        </div>
+        <div class='subject-interaction typewriter' subject_interaction>
+          <div subject_info_window class="subject-info"></div>
+          <div dialogue_window class="dialog-box"></div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script src="js/00.utils.js"></script>
-  <script src="js/01.audio.js"></script>
-  <script src="js/02.seed-words.js"></script>
-  <script src="js/03.word-generator.js"></script>
-  <script src="js/04.htmlize.js"></script>
-  <script src="js/05.svg.js"></script>
+    <script src="js/00.utils.js"></script>
+    <script src="js/01.audio.js"></script>
+    <script src="js/02.seed-words.js"></script>
+    <script src="js/03.word-generator.js"></script>
+    <script src="js/04.htmlize.js"></script>
+    <script src="js/05.svg.js"></script>
 
-  <script src="js/06.screen-transition.js"></script>
-  <script src="js/07.splash.js"></script>
-  <script src="js/08.terminal.js"></script>
+    <script src="js/06.screen-transition.js"></script>
+    <script src="js/07.splash.js"></script>
+    <script src="js/08.terminal.js"></script>
 
-  <script src="js/09.dialogue.js"></script>
-  <script src="js/10.subject.js"></script>
-  <script src="js/11.subject-list.js"></script>
-  <script src="js/12.subject-factory.js"></script>
-  <script src="js/13.subject-manager.js"></script>
+    <script src="js/09.dialogue.js"></script>
+    <script src="js/10.subject.js"></script>
+    <script src="js/11.subject-list.js"></script>
+    <script src="js/12.subject-factory.js"></script>
+    <script src="js/13.subject-manager.js"></script>
 
-  <script src="js/99.main.js"></script>
-</body>
+    <script src="js/99.main.js"></script>
+  </body>
 
 </html>

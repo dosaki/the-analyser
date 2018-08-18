@@ -136,7 +136,6 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     listIsDirty = true;
 
     var additionalSubjects = rand(6,Math.max(maxAdditional || 6, 6));
-    console.log(additionalSubjects);
     for(var i=0; i<additionalSubjects; i++){
       subjects.push(SUBJECT_FACTORY.makeRandomSubject());
     }
