@@ -86,7 +86,7 @@ function RandomSVG(options) {
     _options.maxTriangles = options.maxTriangles || Math.floor(_options.maxSize/100);
 
     _svg = document.createElementNS(_constants.SVGNS, 'svg');
-    _svg.setAttributeNS(_constants.XMLNS, "xmlns:xlink", _constants.XMLNS);
+    _svg.setAttributeNS(_constants.XMLNS, "xmlns:xlink", _constants.XLINK);
     _svg.setAttribute('width', _options.width || 100);
     _svg.setAttribute('height', _options.height || 100);
     _svg.setAttribute('viewbox', "0 0 " + _options.width + " " + _options.height);
