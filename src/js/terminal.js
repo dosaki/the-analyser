@@ -1,10 +1,9 @@
-function Terminal(username) {
+function Terminal() {
 
   'use strict';
 
   var _self = this;
 
-  var _username = "anonymous";
   var _commands = [];
   var _today = "";
   var _dir = "~"
@@ -57,10 +56,10 @@ function Terminal(username) {
   var commandForPrinting = function(c) {
     var commandLine = document.createElement("div");
     var userHost = document.createElement("span");
-    userHost.innerHTML = colour(_username, 'purple') + colour('@', 'yellow') + colour(_host, 'green')+ colour(" "+_dir, 'yellow')+colour(' $','purple');
+    userHost.innerHTML = colour(PLAYER.name, 'purple') + colour('@', 'yellow') + colour(_host, 'green')+ colour(" "+_dir, 'yellow')+colour(' $','purple');
     var command = document.createElement("span");
     command.className = "console-run";
-    command.innerHTML = c;
+    command.innerHTML = c.replace('$USERNAME', PLAYER.name);
 
     commandLine.appendChild(userHost);
     commandLine.appendChild(command);
@@ -130,6 +129,15 @@ function Terminal(username) {
     return output;
   };
 
+  var __nextScreen = function(e) {
+    if (e.key.toLowerCase() === "n") {
+      window.location.reload();
+    } else if (["y", "enter"].indexOf(e.key.toLowerCase()) !== -1){
+      SCREEN_MANAGER.next();
+      document.removeEventListener('keydown', __nextScreen);
+    }
+  };
+
   var makeOutput = function() {
     var output = document.createElement("div");
     output.appendChild(_l("Loading modules..."));
@@ -142,25 +150,19 @@ function Terminal(username) {
     input.setAttribute('type', 'text');
     input.className = "console-input";
     input.setAttribute('console_input', '');
-    input.addEventListener('keydown', function(e) {
-      if (e.key.toLowerCase() === "n") {
-        SCREEN_MANAGER.goto(0);
-      } else {
-        SCREEN_MANAGER.next();
-      }
-    });
+    input.addEventListener('keydown', __nextScreen);
+    document.addEventListener('keydown', __nextScreen);
     confirmLine.appendChild(confirmation);
     confirmLine.appendChild(input);
     output.appendChild(confirmLine);
     return output;
   };
 
-  var init = function(username) {
-    _username = username;
+  var init = function() {
     _today = new Date();
     _host = "terminal" + rand(1, 90);
     _commands = {};
-    _commands["ssh " + username + "@decommissioner.technology"] = function() {
+    _commands["ssh $USERNAME@decommissioner.technology"] = function() {
       _host = "decommissioner.technology"
       return null;
     };
@@ -179,13 +181,13 @@ function Terminal(username) {
     };
   };
 
-  init(username);
+  init();
 }
 
 var TERMINAL;
 window.addEventListener("load", function(event) {
   var terminalScreenElement = document.querySelector('[screen="1"]');
-  TERMINAL = new Terminal("dosaki");
+  TERMINAL = new Terminal();
   terminalScreenElement.onvisible = function() {
     TERMINAL.print(terminalScreenElement);
     TERMINAL.animate(terminalScreenElement);

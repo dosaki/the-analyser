@@ -23,7 +23,21 @@ uglifycss ./src/css/* > ${BUILD}/css/game.css
 
 mkdir -p ${BUILD}/js
 cat ./src/index.html | grep -v "<script src=\"js/" | grep -v "</html>" | grep -v "</body>" > ${BUILD}/index.html
-uglifyjs ./src/js/* > ${BUILD}/js/bundle.js
+uglifyjs ./src/js/utils.js \
+  ./src/js/audio.js \
+  ./src/js/seed-words.js \
+  ./src/js/word-generator.js \
+  ./src/js/htmlize.js \
+  ./src/js/svg.js \
+  ./src/js/screen-transition.js \
+  ./src/js/splash.js \
+  ./src/js/terminal.js \
+  ./src/js/dialogue.js \
+  ./src/js/subject.js \
+  ./src/js/subject-list.js \
+  ./src/js/subject-factory.js \
+  ./src/js/subject-manager.js \
+  ./src/js/main.js > ${BUILD}/js/bundle.js
 echo "    <script src='js/bundle.js'></script>" >> ${BUILD}/index.html
 echo "  </body>" >> ${BUILD}/index.html
 echo "</html>" >> ${BUILD}/index.html

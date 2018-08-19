@@ -113,7 +113,7 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
   _self.decomissionCurrent = function() {
     _self.previousSubject = _self.currentSubject;
     _self.previousSubjectListElement = _self.currentSubjectListElement;
-    _self.currentSubject.flagForDecommission();
+    _self.currentSubject.flagAs('bad');
     _self.currentSubject.clear();
     _self.currentSubject = null;
     _self.currentSubjectListElement = null;
@@ -121,9 +121,20 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     listIsDirty = true;
   };
 
+  _self.dutyFitCurrent = function(){
+    _self.previousSubject = _self.currentSubject;
+    _self.previousSubjectListElement = _self.currentSubjectListElement;
+    _self.currentSubject.flagAs('ok');
+    _self.currentSubject.clear();
+    _self.currentSubject = null;
+    _self.currentSubjectListElement = null;
+    _self.wipeSubjectAreas();
+    listIsDirty = true;
+  }
+
   var subjectsToAnalyse = function() {
     return subjects.filter(function(s) {
-      return !s.isFlaggedForDecommission();
+      return !s.isFlaggedForDecommission() && !s.isFlaggedAsOk();
     });
   };
 

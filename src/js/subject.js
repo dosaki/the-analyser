@@ -11,7 +11,12 @@ function Subject(name, status, purpose, notes, conversation){
   _self.conversation = null;
   _self.imageSVG = null;
 
-  var _isFlaggedForDecommission = false;
+  _self.isOk = false;
+
+  var flaggedAs = {
+    'bad': false,
+    'ok': false
+  };
 
   _self.render = function(){
     var elementHolder = document.createElement('ul');
@@ -27,16 +32,16 @@ function Subject(name, status, purpose, notes, conversation){
     _self.conversation.update(dialogueSelector);
   };
 
-  _self.flagForDecommission = function(){
-    _isFlaggedForDecommission = true;
+  _self.flagAs = function(reason){
+    flaggedAs[reason] = true;
   };
 
-  _self.flagAsFitForDuty = function(){
-    _isFlaggedForDecommission = false;
-  }
+  _self.isFlaggedAsOk = function(){
+    return flaggedAs['ok'];
+  };
 
   _self.isFlaggedForDecommission = function(){
-    return _isFlaggedForDecommission;
+    return flaggedAs['bad'];
   };
 
   _self.clear = function(){

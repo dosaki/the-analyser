@@ -67,6 +67,13 @@ function DialogueNode(questionText, answersMap, onSelectFunction) {
         _onSelect(_self);
       };
     }));
+    answersContainerElement.appendChild(makeAnswerElement("Mark as fit for duty", function(e){
+      AUDIO.select();
+      SUBJECT_MANAGER.dutyFitCurrent();
+      if (_onSelect && typeof _onSelect === "function") {
+        _onSelect(_self);
+      };
+    }));
 
     return answersContainerElement;
   };
