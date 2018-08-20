@@ -1,7 +1,7 @@
-var HTMLIZE = {
-  newlines: {
-    toBRs: function(string) {
-      return string.split('\n').join('<br/>');
+var HTML = {
+  nl: {
+    br: function(s) {
+      return s.split('\n').join('<br/>');
     }
   }
 };

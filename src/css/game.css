@@ -8,6 +8,7 @@ html, body {
   width: 100%;
   height: 100%;
 }
+
 body {
   background: #404040;
   color: #c8c8c8;
@@ -23,20 +24,20 @@ body {
   stroke: red;
 }
 
-.splash-logo rect {
-  fill: red;
-}
-
 .splash-logo:hover circle {
   stroke: #87b32a;
 }
 
-.splash-logo:hover rect {
-  fill: #87b32a;
-}
-
 .splash-logo:active circle {
   stroke: #11ff00;
+}
+
+.splash-logo rect {
+  fill: red;
+}
+
+.splash-logo:hover rect {
+  fill: #87b32a;
 }
 
 .splash-logo:active rect {
@@ -163,17 +164,21 @@ button {
   * {
     font-size: 0.95em;
   }
+
   .typewriter li, .typewriter .question {
     animation: mobileTyping 2s steps(100, end);
   }
-  .subject-list li{
-    padding-top:20px;
-    padding-bottom:20px;
+
+  .subject-list li {
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
+
   .subject-info svg {
-    width:150px;
-    height:150px;
+    width: 150px;
+    height: 150px;
   }
+
   .subject-info li {
     white-space: pre-wrap;
   }
@@ -209,11 +214,11 @@ button {
 }
 
 @keyframes typing {
-  from {
+  0% {
     max-width: 0;
     width: fit-content
   }
-  to {
+  100% {
     max-width: 100%;
     width: fit-content
   }
@@ -227,7 +232,8 @@ button {
   font-weight: bolder;
 }
 
-.subject-property-value {}
+.subject-property-value {
+}
 
 .ls-list td {
   padding-right: 13px;
@@ -244,28 +250,30 @@ button {
 .console-purple {
   color: #c590ff;
 }
+
 .console-green {
   color: #abff91;
 }
+
 .console-yellow {
   color: #fffd45;
   font-weight: bold;
 }
 
 .console-run {
-  padding-left:13px;
+  padding-left: 13px;
 }
 
 .terminal-command.visible {
-  display:flex;
+  display: flex;
 }
 
 *::-webkit-scrollbar {
-    width: 0.5em;
+  width: 0.5em;
 }
 
 *::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px #171717;
+  -webkit-box-shadow: inset 0 0 6px #171717;
 }
 
 *::-webkit-scrollbar-thumb {
@@ -273,11 +281,11 @@ button {
   outline: 1px solid slategrey;
 }
 
-.splash{
+.splash {
   align-items: center;
 }
 
-.username-input{
+.username-input {
   margin-top: auto;
 }
 
@@ -287,11 +295,11 @@ button {
 }
 
 .wrong {
-  color:#ff6161;
+  color: #ff6161;
   text-align: center;
 }
 
-.endscreen > div{
+.endscreen > div {
   flex: 1 1 auto;
   text-align: center;
 }
@@ -308,25 +316,25 @@ button {
 
 .score {
   text-align: center;
-  margin-top:13px;
+  margin-top: 13px;
 }
 
 .final-note {
   border-top: 1px solid #ffd6d6;
   margin: auto;
   padding: 10px;
-  margin-top:13px;
-  width:50%;
+  margin-top: 13px;
+  width: 50%;
 }
 
 .final-note a {
-  color:#ffadad;
+  color: #ffadad;
 }
 
 .final-note a:visited {
-  color:#905c5c;
+  color: #905c5c;
 }
 
 .final-note a:hover {
-  color:#ffd6d6;
+  color: #ffd6d6;
 }

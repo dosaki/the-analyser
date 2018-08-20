@@ -2,14 +2,14 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
 
   'use strict';
 
-  var _self = this;
+  var _s = this;
 
-  _self.currentSubject = null;
-  _self.currentSubjectListElement = null;
-  _self.previousSubject = null;
-  _self.previousSubjectListElement = null;
-  _self.hasCreatedStoryNode = false;
-  _self.storyStage = -1;
+  _s.currentSubject = null;
+  _s.currentSubjectListElement = null;
+  _s.previousSubject = null;
+  _s.previousSubjectListElement = null;
+  _s.hasCreatedStoryNode = false;
+  _s.storyStage = -1;
 
   var subjects = [];
   var elementSelector = "";
@@ -19,7 +19,7 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
   var isDirty = true;
   var listIsDirty = true;
 
-  _self.renderSubject = function(subject) {
+  _s.renderSubject = function(subject) {
     var container = document.querySelector(elementSelector);
     container.innerHTML = "";
     if (subject) {
@@ -28,21 +28,21 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     }
   };
 
-  _self.reRenderSubject = function() {
+  _s.reRenderSubject = function() {
     listIsDirty = true;
     isDirty = true;
   };
 
-  _self.wipeSubjectAreas = function() {
-    _self.renderSubject(); //no subject causes a clear
+  _s.wipeSubjectAreas = function() {
+    _s.renderSubject(); //no subject causes a clear
     document.querySelector(dialogueSelector).innerHTML = "";
     document.querySelector(dialogueHistorySelector).innerHTML = "";
   };
 
-  _self.highlightSubject = function(element) {
+  _s.highlightSubject = function(element) {
     if (element) {
-      if (_self.previousSubjectListElement && _self.previousSubjectListElement.classList.contains("selected")) {
-        _self.previousSubjectListElement.classList.remove("selected");
+      if (_s.previousSubjectListElement && _s.previousSubjectListElement.classList.contains("selected")) {
+        _s.previousSubjectListElement.classList.remove("selected");
       }
       if (!element.classList.contains("selected")) {
         element.classList.add("selected");
@@ -50,37 +50,37 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     }
   };
 
-  _self.selectSubject = function(subject, element) {
-    if (subject !== _self.currentSubject && element !== _self.currentSubjectListElement) {
-      _self.previousSubject = _self.currentSubject;
-      _self.previousSubjectListElement = _self.currentSubjectListElement;
-      _self.currentSubject = subject;
-      _self.currentSubjectListElement = element;
-      _self.wipeSubjectAreas();
-      if(_self.previousSubject){
-        _self.previousSubject.conversation.clear();
+  _s.selectSubject = function(subject, element) {
+    if (subject !== _s.currentSubject && element !== _s.currentSubjectListElement) {
+      _s.previousSubject = _s.currentSubject;
+      _s.previousSubjectListElement = _s.currentSubjectListElement;
+      _s.currentSubject = subject;
+      _s.currentSubjectListElement = element;
+      _s.wipeSubjectAreas();
+      if(_s.previousSubject){
+        _s.previousSubject.convo.clear();
       }
       isDirty = true;
     }
   };
 
-  _self.update = function() {
+  _s.update = function() {
     if (listIsDirty) {
       listIsDirty = false;
-      _self.renderList();
+      _s.renderList();
     }
     if (isDirty) {
-      _self.highlightSubject(_self.currentSubjectListElement);
-      _self.renderSubject(_self.currentSubject);
+      _s.highlightSubject(_s.currentSubjectListElement);
+      _s.renderSubject(_s.currentSubject);
       isDirty = false;
     }
-    if (_self.currentSubject) {
-      _self.currentSubject.update(dialogueSelector, dialogueHistorySelector);
+    if (_s.currentSubject) {
+      _s.currentSubject.update(dialogueSelector, dialogueHistorySelector);
     }
   };
 
 
-  _self.renderList = function() {
+  _s.renderList = function() {
     var container = document.querySelector(listSelector);
     var list = document.createElement('ul');
     var eligibleSubjects = subjectsToAnalyse();
@@ -93,7 +93,7 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
       (function(s){
         subjectLi.addEventListener('click', function(e) {
           AUDIO.select();
-          _self.selectSubject(s, e.target);
+          _s.selectSubject(s, e.target);
         })
       })(eligibleSubjects[i]);
       list.appendChild(subjectLi);
@@ -102,7 +102,7 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     container.appendChild(list);
   };
 
-  _self.removeSubject = function(subject) {
+  _s.removeSubject = function(subject) {
     listIsDirty = true;
     subject.clear();
     var index = subjects.indexOf(subject);
@@ -112,47 +112,47 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     return subject;
   };
 
-  _self.addSubject = function(subject) {
+  _s.addSubject = function(subject) {
     listIsDirty = true;
     subjects.push(subject);
   };
 
-  _self.tryMakeNew = function(){
+  _s.tryMakeNew = function(){
     var roll = rand(0,5);
-    if(_self.storyStage === 0 && !_self.hasCreatedStoryNode && STORY_SUBJECTS[_self.storyStage]){
-      _self.hasCreatedStoryNode = true;
-      subjects.push(STORY_SUBJECTS[_self.storyStage]);
+    if(_s.storyStage === 0 && !_s.hasCreatedStoryNode && STORY_SUBJECTS[_s.storyStage]){
+      _s.hasCreatedStoryNode = true;
+      subjects.push(STORY_SUBJECTS[_s.storyStage]);
     }
-    else if(_self.storyStage > 0 && !_self.hasCreatedStoryNode && STORY_SUBJECTS[_self.storyStage] && roll >= 3){
-      _self.hasCreatedStoryNode = true;
-      subjects.push(STORY_SUBJECTS[_self.storyStage]);
+    else if(_s.storyStage > 0 && !_s.hasCreatedStoryNode && STORY_SUBJECTS[_s.storyStage] && roll >= 3){
+      _s.hasCreatedStoryNode = true;
+      subjects.push(STORY_SUBJECTS[_s.storyStage]);
     }
     else if(roll === 0){
       subjects.push(SUBJECT_FACTORY.makeRandomSubject());
     }
   }
 
-  _self.decommissionCurrent = function() {
-    _self.previousSubject = _self.currentSubject;
-    _self.previousSubjectListElement = _self.currentSubjectListElement;
-    _self.currentSubject.flagAs('bad');
-    _self.currentSubject.clear();
-    _self.currentSubject = null;
-    _self.currentSubjectListElement = null;
-    _self.wipeSubjectAreas();
-    _self.tryMakeNew();
+  _s.decommissionCurrent = function() {
+    _s.previousSubject = _s.currentSubject;
+    _s.previousSubjectListElement = _s.currentSubjectListElement;
+    _s.currentSubject.flagAs('bad');
+    _s.currentSubject.clear();
+    _s.currentSubject = null;
+    _s.currentSubjectListElement = null;
+    _s.wipeSubjectAreas();
+    _s.tryMakeNew();
     listIsDirty = true;
   };
 
-  _self.dutyFitCurrent = function(){
-    _self.previousSubject = _self.currentSubject;
-    _self.previousSubjectListElement = _self.currentSubjectListElement;
-    _self.currentSubject.flagAs('ok');
-    _self.currentSubject.clear();
-    _self.currentSubject = null;
-    _self.currentSubjectListElement = null;
-    _self.wipeSubjectAreas();
-    _self.tryMakeNew();
+  _s.dutyFitCurrent = function(){
+    _s.previousSubject = _s.currentSubject;
+    _s.previousSubjectListElement = _s.currentSubjectListElement;
+    _s.currentSubject.flagAs('ok');
+    _s.currentSubject.clear();
+    _s.currentSubject = null;
+    _s.currentSubjectListElement = null;
+    _s.wipeSubjectAreas();
+    _s.tryMakeNew();
     listIsDirty = true;
   }
 

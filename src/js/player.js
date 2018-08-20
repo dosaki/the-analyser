@@ -1,22 +1,22 @@
 function Player(){
   'use strict';
-  var _self = this;
+  var _s = this;
 
-  _self.decomissions = 0;
-  _self.dutyFits = 0;
-  _self.wrongfulDecomissions = 0;
-  _self.wrongfulDutyFits = 0;
-  _self.name = "Anonymous";
-  _self.host = '';
-  _self.endingNr = -1;
+  _s.dec = 0;
+  _s.dFit = 0;
+  _s.wDec = 0;
+  _s.wDFit = 0;
+  _s.name = "Anonymous";
+  _s.host = '';
+  _s.endingNr = -1;
 
-  _self.decomissionAccuracy = function(){
-    return (_self.wrongDecomissions/_self.decomissions)*100 || 0;
+  _s.decAcc = function(){
+    return (_s.wDec/_s.dec)*100 || 0;
   };
 
-  _self.dutyFitAccuracy = function(){
-    return (_self.wrongDutyFits/_self.dutyFits)*100 || 0;
+  _s.dfAcc = function(){
+    return (_s.wDFit/_s.dFit)*100 || 0;
   };
-};
+}
 
-var PLAYER = new Player();
+var P = new Player();

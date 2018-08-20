@@ -2,17 +2,17 @@ function RandomSVG(options) {
 
   'use strict';
 
-  var W3URL = "http://www.w3.org/"
+  var W3URL = "http://www.w3.org/";
   var _constants = {
     SVGNS: W3URL + "2000/svg",
     XMLNS: W3URL + "2000/xmlns/",
     XLINK: W3URL + "1999/"
-  }
-  var _self = this;
+  };
+  var _s = this;
   var _svg;
   var _options;
 
-  _self.getElement = function() {
+  _s.getElement = function() {
     return _svg;
   };
 
@@ -26,7 +26,7 @@ function RandomSVG(options) {
       fill: getRandomColor(),
       stroke: getRandomColor(),
       "stroke-width": rand(0, 3)
-    })
+    });
   };
 
   var circle = function() {
@@ -38,7 +38,7 @@ function RandomSVG(options) {
       fill: getRandomColor(),
       stroke: getRandomColor(),
       "stroke-width": rand(0, 3)
-    })
+    });
   };
 
   var tria = function() {
@@ -54,22 +54,22 @@ function RandomSVG(options) {
       stroke: getRandomColor(),
       "stroke-width": rand(0, 3)
     });
-  }
+  };
 
   var drawShape = function(shape, props) {
     var s = document.createElementNS(_constants.SVGNS, shape);
 
-    for (var key in props) {
-      if (props.hasOwnProperty(key) && props[key] !== undefined) {
+    for (var i in props) {
+      if (props.hasOwnProperty(i) && props[i] !== undefined) {
         var value = "";
-        if (typeof props[key] === "object") {
-          for (var k in props[key]) {
-            value += k + ": " + props[key][k] + "; "
+        if (typeof props[i] === "object") {
+          for (var k in props[i]) {
+            value += k + ": " + props[i][k] + "; "
           }
         } else {
-          value = props[key];
+          value = props[i];
         }
-        s.setAttributeNS(null, key, value);
+        s.setAttributeNS(null, i, value);
       }
     }
     return s;

@@ -43,15 +43,15 @@ cat ./src/index.html | grep -v "<script src=\"js/" | grep -v "</html>" | grep -v
 echo "    <script src='js/bundle.js'></script>" >> ${BUILD}/index_raw.html
 echo "  </body>" >> ${BUILD}/index_raw.html
 echo "</html>" >> ${BUILD}/index_raw.html
-cat ${BUILD}/index_raw.html | tr -d '\n' > ${BUILD}/index.html
+cat ${BUILD}/index_raw.html | sed 's/\s\s*/ /' | tr -d '\n' > ${BUILD}/index.html
 rm ${BUILD}/index_raw.html
 
 cd ${BUILD}
-zip -r ${DIST}/decomissioner.zip .
+zip -r ${DIST}/decommissioner.zip .
 cd ${DIR}
 rm -rf ${BUILD}
 
-size=`du -b dist/decomissioner.zip | awk '{print $1}'`
+size=`du -b dist/decommissioner.zip | awk '{print $1}'`
 leftover=$((size - 13312))
 if [[ $((size - 13312)) -gt 0 ]]; then
   echo -e "\e[93m\e[1m[WARNING] TOO BIG! File size is ${size}. You need to lose $leftover bytes \e[39m"

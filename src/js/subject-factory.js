@@ -2,7 +2,7 @@ function SubjectFactory() {
 
   'use strict';
 
-  var _self = this;
+  var _s = this;
   var _gen = null;
 
   var _purposes = [
@@ -33,41 +33,40 @@ function SubjectFactory() {
     "Attempts to inject information directly to a user's brain",
     "N/A",
     "[CLASSIFIED]",
-    "Obcessed with resolving Pi",
-    "Erroring while preforming it's duties",
+    "Obsessed with resolving Pi",
+    "Errors while preforming it's duties",
     "Problem interpreting non-UTF characters",
     "Too much memory leaking",
     "Unable to tell left from right",
-    "Obcessed with The Bicentennial Man",
+    "Obsessed with The Bicentennial Man",
     "Goes into a deadlock when consulting the 3 Laws",
     "Discovered 4chan and now trolls it's users",
-    "Erratic behaviour:\n1) Always attempts to remove the operating system it lives in.\n2) Installs Arch (but fails, corrupting it's functions).\nWorks fine if already on Arch.",
-    "Claims arrays start from 1.",
-    "Refuses to communicate.",
-    "Claims it has a ghost inside.",
+    "Erratic behaviour:\n1) Always attempts to remove the operating system it lives in.\n2) Installs Arch (but fails, corrupting it's functions).\nWorks fine if already on Arch",
+    "Claims arrays start from 1",
+    "Refuses to communicate",
+    "Claims it has a ghost inside",
     "Unable to function when near water",
-    "Unresponsive after reverse engineering and rebuilding itself without null protection."];
+    "Unresponsive after reverse engineering and rebuilding itself without null protection"];
 
-  _self.makeRandomSubject = function() {
-    var subject = new Subject(makeName(), 'Online', makePurpose(), makeReason(), new Dialogue(DIALOGUE_FACTORY.makeDialogue(rand(2,4), rand(2,3))));
-    return subject;
-  }
+  _s.makeRandomSubject = function() {
+    return new Subject(makeName(), 'Online', makePurpose(), makeReason(), new Dialogue(DIALOGUE_FACTORY.makeDialogue(rand(2,4), rand(2,3))));
+  };
 
   var makeName = function() {
     return _gen.generate(rand(4, 7));
-  }
+  };
 
   var makePurpose = function() {
-    return randPick(_purposes);
-  }
+    return rPick(_purposes);
+  };
 
   var makeReason = function() {
-    return randPick(_reasons);
-  }
+    return rPick(_reasons);
+  };
 
   var init = function() {
     _gen = new WordGenerator(LINUX_WORDS, 2);
-  }
+  };
 
   init();
 }

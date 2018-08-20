@@ -2,7 +2,7 @@ var rand = function(min, max) {
   return Math.floor(Math.random() * ((max || 100) - (min || 0))) + (min || 0);
 };
 
-var randPick = function(list) {
+var rPick = function(list) {
   if (!list || list.length === 0) {
     return "";
   }

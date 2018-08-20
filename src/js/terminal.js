@@ -2,14 +2,14 @@ function Terminal() {
 
   'use strict';
 
-  var _self = this;
+  var _s = this;
 
   var _commands = [];
   var _today = "";
-  var _dir = "~"
-  var _host = ""
+  var _dir = "~";
+  var _host = "";
 
-  _self.animate = function(element) {
+  _s.animate = function(element) {
     var commands = element.children;
     var i = 1;
     commands[0].classList.remove("hidden");
@@ -23,16 +23,16 @@ function Terminal() {
         document.querySelector('input[console_input]').focus();
       }
     }, 1500);
-  }
+  };
 
-  _self.hideAll = function(element) {
+  _s.hideAll = function(element) {
     var commands = element.children;
     for (var i = 0; i < commands.length; i++) {
       commands[i].classList.add("hidden");
     }
-  }
+  };
 
-  _self.print = function(element) {
+  _s.print = function(element) {
     for (var c in _commands) {
       var command = commandForPrinting(c);
       command.className = "terminal-command hidden";
@@ -49,22 +49,22 @@ function Terminal() {
     }
   };
 
-  var colour = function(string, colour) {
-    return "<span class='console-" + colour + "'>" + string + "</span>";
+  var color = function(string, color) {
+    return "<span class='console-" + color + "'>" + string + "</span>";
   };
 
   var commandForPrinting = function(c) {
     var commandLine = document.createElement("div");
     var userHost = document.createElement("span");
-    userHost.innerHTML = colour(PLAYER.name, 'purple') + colour('@', 'yellow') + colour(_host, 'green')+ colour(" "+_dir, 'yellow')+colour(' $','purple');
+    userHost.innerHTML = color(P.name, 'purple') + color('@', 'yellow') + color(_host, 'green')+ color(" "+_dir, 'yellow')+color(' $','purple');
     var command = document.createElement("span");
     command.className = "console-run";
-    command.innerHTML = c.replace('$USERNAME', PLAYER.name);
+    command.innerHTML = c.replace('$USERNAME', P.name);
 
     commandLine.appendChild(userHost);
     commandLine.appendChild(command);
     return commandLine;
-  }
+  };
 
   var _c = function(content) { //cell for file list
     return "<td>" + content + "</td>";
@@ -76,7 +76,7 @@ function Terminal() {
       _c(rand(1, 7)) +
       _c("root") +
       _c("analysts") +
-      _c(rand(4, 99) + "." + rand(0, 9) + randPick(["", "K", "M"])) +
+      _c(rand(4, 99) + "." + rand(0, 9) + rPick(["", "K", "M"])) +
       _c(date + " 00:0" + rand(0, 2) + ":" + (seconds < 10 ? "0" + seconds : seconds)) +
       _c(fileName);
   };
@@ -110,9 +110,9 @@ function Terminal() {
   var makeHelp = function() {
     var output = document.createElement("div");
     output.appendChild(_l("AI Analysis & Diagnositics CLI Tool"));
-    output.appendChild(_l("Analyse and evaluate the AIs that have been flagged for analysis."));
-    output.appendChild(_l("Select a subject from the list on the left, diagnose it to figure out what's wrong with it."));
-    output.appendChild(_l("If it looks ok, flag it as fit for duty, otherwise mark it for decomission."));
+    output.appendChild(_l("Analyse and evaluate the AIs that have been flagged for analysis"));
+    output.appendChild(_l("Pick a subject from the list on the left, diagnose it to figure out what's wrong with it"));
+    output.appendChild(_l("If it looks ok, flag it as fit for duty, otherwise mark it for decommission"));
     output.appendChild(_l("Usage:"));
     output.appendChild(_l("analyser --help", {
       "padding-left": "13px;"
@@ -123,7 +123,7 @@ function Terminal() {
     output.appendChild(_l("analyser --analyse &lt;list&gt;", {
       "padding-left": "13px;"
     }));
-    output.appendChild(_l("Start the interactible CLI tool.", {
+    output.appendChild(_l("Start the interactive CLI tool", {
       "padding-left": "26px;"
     }));
     return output;
@@ -133,7 +133,7 @@ function Terminal() {
     if (e.key.toLowerCase() === "n") {
       window.location.reload();
     } else if (["y", "enter"].indexOf(e.key.toLowerCase()) !== -1){
-      SCREEN_MANAGER.next();
+      SCRMGR.next();
       document.removeEventListener('keydown', __nextScreen);
     }
   };
@@ -142,10 +142,10 @@ function Terminal() {
     var output = document.createElement("div");
     output.appendChild(_l("Loading modules..."));
     output.appendChild(_l("Attempting connection to Global AI Repository..."));
-    output.appendChild(_l("Connected."));
+    output.appendChild(_l("Connected"));
     var confirmLine = document.createElement("div");
     var confirmation = document.createElement("span");
-    confirmation.innerHTML = "Continue? [Y/n]"
+    confirmation.innerHTML = "Continue? [Y/n]";
     var input = document.createElement("input");
     input.setAttribute('type', 'text');
     input.className = "console-input";
@@ -161,14 +161,14 @@ function Terminal() {
   var init = function() {
     _today = new Date();
     _host = "terminal" + rand(1, 90);
-    PLAYER.host = _host;
+    P.host = _host;
     _commands = {};
     _commands["ssh $USERNAME@analyser.tech"] = function() {
-      _host = "analyser.tech"
+      _host = "analyser.tech";
       return null;
     };
-    _commands["cd /var/decomissioning/"] = function() {
-      _dir = "/var/decomissioning/";
+    _commands["cd /var/decommissioning/"] = function() {
+      _dir = "/var/decommissioning/";
       return null;
     };
     _commands["ls -lhtr"] = function() {
@@ -186,7 +186,7 @@ function Terminal() {
 }
 
 var TERMINAL;
-window.addEventListener("load", function(event) {
+window.addEventListener("load", function(e) {
   var terminalScreenElement = document.querySelector('[screen="1"]');
   TERMINAL = new Terminal();
   terminalScreenElement.onvisible = function() {
