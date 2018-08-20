@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="css/game.css" rel="stylesheet" type="text/css"/>
-  <title>$ analyse --decommission</title>
+  <title>The Analyser</title>
 </head>
 <body>
 <div screen="0" class="screen splash">
@@ -33,10 +33,10 @@
   <div class='game-container console-run-result' game_container>
     <div class='subject-list-window'>
       <h2>subjects:</h2>
-      <div subject_list_window class="subject-list"></div>
+      <div subj_list class="subject-list"></div>
     </div>
     <div class='subject-interaction typewriter' subject_interaction>
-      <div subject_info_window class="subject-info"></div>
+      <div subj_info class="subject-info"></div>
       <div dialogue_history class="dialog-box dialog-history"></div>
       <div dialogue_window class="dialog-box"></div>
     </div>
@@ -49,14 +49,13 @@
     </div>
     <div ending_container class='typewriter hidden'>
       <div class='ending' ending_text></div>
-      <div class='score'>Ending #: <span ending_nr></span></div>
-      <div class='score'>Wrongfully marked for decommission: <span score_decommission></span></div>
-      <div class='score'>Wrongfully marked for fit for duty: <span score_fit></span></div>
+      <div class='score'>Ending: <span endnr></span></div>
+      <div class='score'>Decommissions: <span score></span></div>
     </div>
   </div>
   <div class="final-note">
-    <p>Thank you for playing!</p>
-    <p>- <a href="https://dosaki.net">Dosaki</a></p>
+    <p>Thanks for playing! <a href="javascript:window.location.reload();">Restart?</a></p>
+    <p>- <a href="https://dosaki.net/">Dosaki</a></p>
   </div>
 </div>
 <script src="js/utils.js"></script>

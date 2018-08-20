@@ -6,50 +6,63 @@ function SubjectFactory() {
   var _gen = null;
 
   var _purposes = [
-    "Text analyser",
-    "Mood detector",
-    "Lie detector",
-    "Business intelligence tool",
-    "Hostile target detector",
-    "Flight control system",
-    "Train scheduler",
-    "Medical diagnostic companion",
-    "Personal trainer",
-    "Stock trading agent",
-    "Digital Dungeon Master",
-    "Automated customer support system",
-    "Military drone controller",
-    "Self-driving agent",
-    "Crop harvester & carer",
     "[CLASSIFIED]",
+    "N/A",
+    "Train scheduler",
+    "Personal trainer",
+    "Digital Dungeon Master",
+    "Automated customer support",
+    "Military drone controller",
+    "Crop harvester & carer",
     "Personal assistant",
     "Automated technician",
     "General purpose virtual intelligence",
-    "Smart data storage and analysis tool",
-    "Automated code generator"];
+  ];
+
+  var _purposes1 = [
+    "Mood",
+    "Lie",
+    "Hostile target",
+    "Business intelligence",
+    "Medical diagnostic",
+    "Flight control",
+    "Stock trading",
+    "Self-driving",
+    "Code",
+    "Text",
+    "Smart data storage & analysis"
+  ];
+
+  var _purposes2 = [
+    " detector",
+    " generator",
+    " analyser",
+    " companion",
+    " tool",
+    " system",
+    " agent"
+  ];
 
   var _reasons = [
+    "[CLASSIFIED]",
+    "N/A",
     "Spits out curse words at random",
     "Attempts to inject information directly to a user's brain",
-    "N/A",
-    "[CLASSIFIED]",
     "Obsessed with resolving Pi",
     "Errors while preforming it's duties",
     "Problem interpreting non-UTF characters",
-    "Too much memory leaking",
+    "Memory leaks galore",
     "Unable to tell left from right",
-    "Obsessed with The Bicentennial Man",
+    "Obsessed with Blade Runner",
     "Goes into a deadlock when consulting the 3 Laws",
     "Discovered 4chan and now trolls it's users",
     "Erratic behaviour:\n1) Always attempts to remove the operating system it lives in.\n2) Installs Arch (but fails, corrupting it's functions).\nWorks fine if already on Arch",
-    "Claims arrays start from 1",
-    "Refuses to communicate",
     "Claims it has a ghost inside",
-    "Unable to function when near water",
-    "Unresponsive after reverse engineering and rebuilding itself without null protection"];
+    "Unresponsive after reverse engineering and rebuilding itself without null protection"
+  ];
 
   _s.makeRandomSubject = function() {
-    return new Subject(makeName(), 'Online', makePurpose(), makeReason(), new Dialogue(DIALOGUE_FACTORY.makeDialogue(rand(2,4), rand(2,3))));
+    return new Subject(makeName(), 'Online', makePurpose(), makeReason(), new Dialogue(DIALOGUE_FACTORY.makeDialogue(rand(2, 4), rand(2, 3))));
   };
 
   var makeName = function() {
@@ -57,7 +70,7 @@ function SubjectFactory() {
   };
 
   var makePurpose = function() {
-    return rPick(_purposes);
+    return rand(0, 4) < 2 ? rPick(_purposes) : rPick(_purposes1) + rPick(_purposes2);
   };
 
   var makeReason = function() {
@@ -65,7 +78,7 @@ function SubjectFactory() {
   };
 
   var init = function() {
-    _gen = new WordGenerator(LINUX_WORDS, 2);
+    _gen = new WordGenerator(WORDS, 2);
   };
 
   init();

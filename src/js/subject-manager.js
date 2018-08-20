@@ -92,7 +92,7 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
       });
       (function(s){
         subjectLi.addEventListener('click', function(e) {
-          AUDIO.select();
+          AUDIO.click();
           _s.selectSubject(s, e.target);
         })
       })(eligibleSubjects[i]);
@@ -100,16 +100,6 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     }
     container.innerHTML = "";
     container.appendChild(list);
-  };
-
-  _s.removeSubject = function(subject) {
-    listIsDirty = true;
-    subject.clear();
-    var index = subjects.indexOf(subject);
-    if (index > -1) {
-      array.splice(index, 1);
-    }
-    return subject;
   };
 
   _s.addSubject = function(subject) {
@@ -144,7 +134,7 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     listIsDirty = true;
   };
 
-  _s.dutyFitCurrent = function(){
+  _s.okCurrent = function(){
     _s.previousSubject = _s.currentSubject;
     _s.previousSubjectListElement = _s.currentSubjectListElement;
     _s.currentSubject.flagAs('ok');
@@ -159,6 +149,12 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
   var subjectsToAnalyse = function() {
     return subjects.filter(function(s) {
       return !s.isFlaggedForDecommission() && !s.isFlaggedAsOk();
+    });
+  };
+
+  _s.decommissioned = function() {
+    return subjects.filter(function(s) {
+      return s.isFlaggedForDecommission();
     });
   };
 

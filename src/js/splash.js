@@ -1,10 +1,10 @@
 window.addEventListener("load", function(e) {
   var btn = document.querySelector('[splash_button]');
-  var unameInput = document.querySelector('[username_input]');
-  unameInput.focus();
+  var uname = document.querySelector('[username_input]');
+  uname.focus();
   var goNext = function(){
-    AUDIO.select();
-    P.name = unameInput.value;
+    AUDIO.click();
+    P.name = uname.value;
     if(P.name){
       SCRMGR.next();
     }
@@ -14,7 +14,7 @@ window.addEventListener("load", function(e) {
   };
   btn.addEventListener('mouseenter', function(e){ AUDIO.hover(); });
   btn.addEventListener('click', goNext);
-  unameInput.addEventListener('keyup', function(e){
+  uname.addEventListener('keyup', function(e){
     if(e.key.toLowerCase() === "enter"){
       goNext();
     }

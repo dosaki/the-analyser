@@ -33,12 +33,12 @@ function Terminal() {
   };
 
   _s.print = function(element) {
-    for (var c in _commands) {
-      var command = commandForPrinting(c);
+    for (var i in _commands) {
+      var command = commandForPrinting(i);
       command.className = "terminal-command hidden";
       element.appendChild(command);
-      if (_commands[c]) {
-        var result = _commands[c]();
+      if (_commands[i]) {
+        var result = _commands[i]();
         if (result) {
           var reply = document.createElement("div");
           reply.appendChild(result);
@@ -100,8 +100,8 @@ function Terminal() {
     var lineElement = document.createElement("div");
     lineElement.innerHTML = line;
     var style = "";
-    for (var o in styleMap) {
-      style += o + ": " + styleMap[o] + ";"
+    for (var i in styleMap) {
+      style += i + ": " + styleMap[i] + ";"
     }
     lineElement.setAttribute('style', style);
     return lineElement;
@@ -112,7 +112,7 @@ function Terminal() {
     output.appendChild(_l("AI Analysis & Diagnositics CLI Tool"));
     output.appendChild(_l("Analyse and evaluate the AIs that have been flagged for analysis"));
     output.appendChild(_l("Pick a subject from the list on the left, diagnose it to figure out what's wrong with it"));
-    output.appendChild(_l("If it looks ok, flag it as fit for duty, otherwise mark it for decommission"));
+    output.appendChild(_l("If it looks ok, flag it as OK, otherwise mark it for decommission"));
     output.appendChild(_l("Usage:"));
     output.appendChild(_l("analyser --help", {
       "padding-left": "13px;"

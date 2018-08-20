@@ -312,11 +312,11 @@ button {
 .ending {
   font-size: 2em;
   margin-top: 30px;
+  margin-bottom:13px;
 }
 
 .score {
   text-align: center;
-  margin-top: 13px;
 }
 
 .final-note {

@@ -18,8 +18,8 @@ function RandomSVG(options) {
 
   var rect = function() {
     return drawShape('rect', {
-      x: rand(),
-      y: rand(),
+      x: rand(0, 300),
+      y: rand(0, 300),
       width: rand(1, _options.maxSize*(2/3)),
       height: rand(1, _options.maxSize*(2/3)),
       opacity: Math.random(),
@@ -31,8 +31,8 @@ function RandomSVG(options) {
 
   var circle = function() {
     return drawShape('circle', {
-      cx: rand(),
-      cy: rand(),
+      cx: rand(0, 300),
+      cy: rand(0, 300),
       r: rand(1, _options.maxSize/2),
       opacity: Math.random(),
       fill: getRandomColor(),
@@ -42,8 +42,8 @@ function RandomSVG(options) {
   };
 
   var tria = function() {
-    var x = rand();
-    var y = rand();
+    var x = rand(0, 300);
+    var y = rand(0, 300);
     var size = Math.floor(_options.maxSize*(2/3));
     return drawShape('polygon', {
       points: x + "," + y + " " +

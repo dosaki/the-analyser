@@ -24,7 +24,7 @@ function Subject(name, status, purpose, notes, convo, onFlag) {
     var elementHolder = document.createElement('ul');
     elementHolder.append(_s.imageSVG.getElement());
     if(_s.status === "MESSAGE"){
-      elementHolder.innerHTML = HTML.nl.br(_s.purpose);
+      elementHolder.innerHTML = nl2br(_s.purpose);
     }
     else{
       elementHolder.appendChild(makePropertyElement("Name", _s.name));
@@ -62,10 +62,10 @@ function Subject(name, status, purpose, notes, convo, onFlag) {
     var element = document.createElement('li');
     var propertyNameElement = document.createElement('span');
     propertyNameElement.className = "subject-property-name";
-    propertyNameElement.innerHTML = HTML.nl.br(propertyName + ": ");
+    propertyNameElement.innerHTML = nl2br(propertyName + ": ");
     var propertyValueElement = document.createElement('span');
     propertyValueElement.className = "subject-property-value";
-    propertyValueElement.innerHTML = HTML.nl.br(property);
+    propertyValueElement.innerHTML = nl2br(property);
     element.appendChild(propertyNameElement);
     element.appendChild(propertyValueElement);
     return element;

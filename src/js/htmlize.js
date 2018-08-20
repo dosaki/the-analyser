@@ -1,7 +1,3 @@
-var HTML = {
-  nl: {
-    br: function(s) {
-      return s.split('\n').join('<br/>');
-    }
-  }
-};
+var nl2br = function(s) {
+  return s.split('\n').join('<br/>');
+}

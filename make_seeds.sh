@@ -11,4 +11,4 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null && pwd )"
 NR="$1"
 words=`ls /usr/bin | cat | grep -x '.\{6,99\}' | sort -R | tail -$NR | sort | sed -e 's/.*/"&",/'`
 
-echo "var LINUX_WORDS = [${words::-1}];" > "$DIR/src/js/seed-words.js"
+echo "var WORDS = [${words::-1}];" > "$DIR/src/js/seed-words.js"

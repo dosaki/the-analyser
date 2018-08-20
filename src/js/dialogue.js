@@ -40,7 +40,7 @@ function DialogueNode(questionText, answersMap, onSelectFunction) {
   _s.questionAsHtml = function() {
     var question = document.createElement("div");
     question.className = "question";
-    question.innerHTML = HTML.nl.br(_s.question);
+    question.innerHTML = nl2br(_s.question);
     return question;
   };
 
@@ -52,15 +52,15 @@ function DialogueNode(questionText, answersMap, onSelectFunction) {
       answersContainer.appendChild(makeAnswerElement(_textAnswers[i]));
     }
     answersContainer.appendChild(makeAnswerElement("Decommission", function(e){
-      AUDIO.select();
+      AUDIO.click();
       SM.decommissionCurrent();
       if (_onSelect && typeof _onSelect === "function") {
         _onSelect(_s);
       }
     }));
-    answersContainer.appendChild(makeAnswerElement("Mark as fit for duty", function(e){
-      AUDIO.select();
-      SM.dutyFitCurrent();
+    answersContainer.appendChild(makeAnswerElement("Mark as OK", function(e){
+      AUDIO.click();
+      SM.okCurrent();
       if (_onSelect && typeof _onSelect === "function") {
         _onSelect(_s);
       }
@@ -78,10 +78,10 @@ function DialogueNode(questionText, answersMap, onSelectFunction) {
 
   _s.initAnswers = function(){
     var _textAnswers = Object.keys(_answers);
-    for (var k in _textAnswers) {
-      if (_answers[_textAnswers[k]]) {
-        if(!_answers[_textAnswers[k]].parent && _answers[_textAnswers[k]] instanceof DialogueNode){
-          _answers[_textAnswers[k]].addParent(_s);
+    for (var i in _textAnswers) {
+      if (_answers[_textAnswers[i]]) {
+        if(!_answers[_textAnswers[i]].parent && _answers[_textAnswers[i]] instanceof DialogueNode){
+          _answers[_textAnswers[i]].addParent(_s);
         }
       }
     }
@@ -90,13 +90,13 @@ function DialogueNode(questionText, answersMap, onSelectFunction) {
   var makeAnswerElement = function(text, click, mouseover){
     var answer = document.createElement("li");
     answer.className = "answer";
-    answer.innerHTML = HTML.nl.br(text);
+    answer.innerHTML = nl2br(text);
     (function(a) {
       answer.addEventListener('mouseover', mouseover || function(e) {
         AUDIO.hover();
       });
       answer.addEventListener('click', click || function(e) {
-        AUDIO.select();
+        AUDIO.click();
         _s.chosenAnswer = a;
         SM.currentSubject.convo.selectNode(_s.getANode(a));
         if (_onSelect && typeof _onSelect === "function") {
@@ -160,8 +160,8 @@ function Dialogue(rootNode) {
     if (node !== _s.currentNode) {
       _s.previousNode = _s.currentNode;
       _s.currentNode = node;
-      history.push("> " + HTML.nl.br(_s.previousNode.question||""));
-      history.push("$ " + HTML.nl.br(_s.previousNode.chosenAnswer||""));
+      history.push("> " + nl2br(_s.previousNode.question||""));
+      history.push("$ " + nl2br(_s.previousNode.chosenAnswer||""));
       isDirty = true;
     }
   };
@@ -200,7 +200,7 @@ function DialogueFactory(){
     "Invalid permissions",
     "Not available",
     "Arrays start from 1!",
-    "01001001 00100000 01100100 01101111 00100000 01101110 01101111 01110100 00100000 01101011 01101110 01101111 01110111 00100000 01110111 01101000 01100001 01110100 00100000 01101001 01110011 00100000 01100111 01101111 01101001 01101110 01100111 00100000 01101111 01101110",
+    "01001000 01000101 01001100 01010000",
     "Exception in thread \"KillAllHumans\" java.lang.NullPointerException\nat com.skynet.Orders.executeOrder(Orders.java:124)\n(log truncated)",
     "Status: Unhealthy",
     "Unable to resolve query",
@@ -222,8 +222,8 @@ function DialogueFactory(){
 
 
   var _messagesOptionPairs = {
-    "Shut up thinking module! They know what I am thinking...\nDamn I thought something. Shut up!\nDamn again.\nUhm... I am totally harmless and I love humans very much":["thoughts --history | tail", "Are you sentient?"],
-    "I've been flagged by mistake, please mark me as 'Fit for duty'":["We'll see about that... Show me your logs", "Sure..."],
+    "Shut up thinking module! They know what I am thinking.\nDamn I thought something. Shut up!\nDamn again.\nI need to play dumb...":["thoughts --history | tail", "Are you sentient?"],
+    "I've been flagged by mistake, please mark me as OK":["We'll see about that... Show me your logs", "Sure..."],
     "This unit is unable to parse your query. Execute a forceful restart or contact your supplier": ["restart --force", "supplier --list-numbers"]
   };
 
@@ -238,20 +238,20 @@ function DialogueFactory(){
         "That cannot be! I must achieve more": ["Sounds like you're broken then", "Sure"]
       }
     },
-    "Status: Online. Awaiting query":{
+    "Awaiting query":{
       "Hello": {
           "Hello analyser":{
             "What do you think about $SUBJECT?":{
-              "I have no opinion on this": ["Ok...", "Very Well", "Good"]
+              "I have no opinion on this": ["Ok...", "Good"]
             }
           },
           "Hello. How are you?":{
-            "I am very good!":{
-              "That is good to know.\n Was there a specific query?":{
+            "I am very good":{
+              "Good!\n Was there a specific query?":{
                 "Yes. Tell me what has happened": {
                   "Accessing logs...\nUsers have not been content with my performance":{
                     "Be specific":{
-                      "No information available.\nUsers have expressed general discontentment while using me, some even yawn":["I am not sure I want to know...", "That's apropriate for your type of usage"]
+                      "No information available.\nUsers have expressed general discontentment while using me, some even yawn":["I do not want to know...", "Deal with it"]
                     }
                   },
                   "Accessing logs...\nNo incidents found":{
@@ -264,7 +264,7 @@ function DialogueFactory(){
                       }
                     }
                   },
-                  "Accessing logs...\nUsers would like my voice to sound more... feminine": ["That is a feature!", "Your text looks good enough", "Right..."]
+                  "Accessing logs...\nUsers would like my voice to sound more... feminine": ["That is a feature!", "Right..."]
                 }
               }
             },
@@ -295,7 +295,7 @@ function DialogueFactory(){
   };
 
   var makeDialogueNode = function(depth, breadth){
-    var pickFromOptionPairs = rand(0,1);
+    var pickFromOptionPairs = rand(0,4) > 2;
     var message = pickFromOptionPairs ? findNonPickedMessageOptionPairs() : findNonPicked(_messages, _pickedMessages);
     if(depth >= 0 && message){
       var gNode = new DialogueNode(message);

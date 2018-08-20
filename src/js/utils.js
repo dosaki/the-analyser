@@ -6,7 +6,7 @@ var rPick = function(list) {
   if (!list || list.length === 0) {
     return "";
   }
-  return list[Math.floor(Math.random() * list.length)];
+  return list[Math.floor(Math.random() * list.length)] || list[list.length - 1];
 };
 
 //Thank you https://stackoverflow.com/questions/1484506/random-color-generator

@@ -18,11 +18,11 @@ function WordGenerator(words, syllableSize) {
 
   var wordOpts = function(word, groupSize, storage) {
     var ahead = groupSize - 1;
-    for (var c = 0; c < word.length - ahead; c++) {
-      if (!(word[c] in storage)) {
-        storage[word[c]] = [];
+    for (var i = 0; i < word.length - ahead; i++) {
+      if (!(word[i] in storage)) {
+        storage[word[i]] = [];
       }
-      storage[word[c]].push(word.split('').splice(c + 1, ahead).join(''))
+      storage[word[i]].push(word.split('').splice(i + 1, ahead).join(''))
     }
   };
 
