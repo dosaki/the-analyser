@@ -22,9 +22,9 @@ mkdir -p ${BUILD}/css
 uglifycss ./src/css/* > ${BUILD}/css/game.css
 
 mkdir -p ${BUILD}/js
-cat ./src/index.html | grep -v "<script src=\"js/" | grep -v "</html>" | grep -v "</body>" > ${BUILD}/index.html
 uglifyjs ./src/js/utils.js \
   ./src/js/audio.js \
+  ./src/js/player.js \
   ./src/js/seed-words.js \
   ./src/js/word-generator.js \
   ./src/js/htmlize.js \
@@ -32,15 +32,19 @@ uglifyjs ./src/js/utils.js \
   ./src/js/screen-transition.js \
   ./src/js/splash.js \
   ./src/js/terminal.js \
+  ./src/js/endscreen.js \
   ./src/js/dialogue.js \
   ./src/js/subject.js \
   ./src/js/subject-list.js \
   ./src/js/subject-factory.js \
   ./src/js/subject-manager.js \
   ./src/js/main.js > ${BUILD}/js/bundle.js
-echo "    <script src='js/bundle.js'></script>" >> ${BUILD}/index.html
-echo "  </body>" >> ${BUILD}/index.html
-echo "</html>" >> ${BUILD}/index.html
+cat ./src/index.html | grep -v "<script src=\"js/" | grep -v "</html>" | grep -v "</body>" > ${BUILD}/index_raw.html
+echo "    <script src='js/bundle.js'></script>" >> ${BUILD}/index_raw.html
+echo "  </body>" >> ${BUILD}/index_raw.html
+echo "</html>" >> ${BUILD}/index_raw.html
+cat ${BUILD}/index_raw.html | tr -d '\n' > ${BUILD}/index.html
+rm ${BUILD}/index_raw.html
 
 cd ${BUILD}
 zip -r ${DIST}/decomissioner.zip .

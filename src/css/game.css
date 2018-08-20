@@ -290,3 +290,43 @@ button {
   color:#ff6161;
   text-align: center;
 }
+
+.endscreen > div{
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.end-title {
+  font-size: 3em;
+  margin-top: 30px;
+}
+
+.ending {
+  font-size: 2em;
+  margin-top: 30px;
+}
+
+.score {
+  text-align: center;
+  margin-top:13px;
+}
+
+.final-note {
+  border-top: 1px solid #ffd6d6;
+  margin: auto;
+  padding: 10px;
+  margin-top:13px;
+  width:50%;
+}
+
+.final-note a {
+  color:#ffadad;
+}
+
+.final-note a:visited {
+  color:#905c5c;
+}
+
+.final-note a:hover {
+  color:#ffd6d6;
+}

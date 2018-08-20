@@ -1,22 +1,19 @@
 <!DOCTYPE html>
-
 <html>
-
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="css/game.css" rel="stylesheet" type="text/css" />
-    <title>$ analyse --decommission</title>
-  </head>
-
-  <body>
-    <div screen="0" class="screen splash">
-      <div class="username-input">
-        <div class="welcome">Welcome Analyser.</div>
-        Login as: <input type="text" username_input/>
-        <div notification class="wrong hidden">Fill you username, Analyser.</div>
-      </div>
-      <button splash_button class="splash-logo" goto="1">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="css/game.css" rel="stylesheet" type="text/css" />
+  <title>$ analyse --decommission</title>
+</head>
+<body>
+  <div screen="0" class="screen splash">
+    <div class="username-input">
+      <div class="welcome">Welcome Analyser.</div>
+      Login as: <input type="text" username_input/>
+      <div notification class="wrong hidden">Fill your username, Analyser.</div>
+    </div>
+    <button splash_button class="splash-logo" goto="1">
           <svg xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="300" viewbox="0 0 300 300" style="background-color:transparent">
             <filter id="blur">
               <feGaussianBlur in="SourceGraphic" stdDeviation="5"></feGaussianBlur>
@@ -27,45 +24,58 @@
             <rect x="147.5" y="25" width="5" fill="transparent" height="100"></rect>
           </svg>
         </button>
+  </div>
+  <div screen="1" class="screen hidden">
+  </div>
+  <div screen="2" class='screen hidden'>
+    <div class='title console-run-result'>
+      <h1>analyse --decommission</h1>
     </div>
-    <div screen="1" class="screen hidden">
-    </div>
-    <div screen="2" class='screen hidden'>
-      <div class='title console-run-result'>
-        <h1>analyse --decommission</h1>
+    <div class='game-container console-run-result' game_container>
+      <div class='subject-list-window'>
+        <h2>subjects:</h2>
+        <div subject_list_window class="subject-list"></div>
       </div>
-      <div class='game-container console-run-result' game_container>
-        <div class='subject-list-window'>
-          <h2>subjects:</h2>
-          <div subject_list_window class="subject-list"></div>
-        </div>
-        <div class='subject-interaction typewriter' subject_interaction>
-          <div subject_info_window class="subject-info"></div>
-          <div dialogue_history class="dialog-box dialog-history"></div>
-          <div dialogue_window class="dialog-box"></div>
-        </div>
+      <div class='subject-interaction typewriter' subject_interaction>
+        <div subject_info_window class="subject-info"></div>
+        <div dialogue_history class="dialog-box dialog-history"></div>
+        <div dialogue_window class="dialog-box"></div>
       </div>
     </div>
-
-    <script src="js/utils.js"></script>
-    <script src="js/audio.js"></script>
-    <script src="js/player.js"></script>
-    <script src="js/seed-words.js"></script>
-    <script src="js/word-generator.js"></script>
-    <script src="js/htmlize.js"></script>
-    <script src="js/svg.js"></script>
-
-    <script src="js/screen-transition.js"></script>
-    <script src="js/splash.js"></script>
-    <script src="js/terminal.js"></script>
-
-    <script src="js/dialogue.js"></script>
-    <script src="js/subject.js"></script>
-    <script src="js/subject-list.js"></script>
-    <script src="js/subject-factory.js"></script>
-    <script src="js/subject-manager.js"></script>
-
-    <script src="js/main.js"></script>
-  </body>
-
+  </div>
+  <div screen="3" class='endscreen screen hidden'>
+    <div class='console-run-result'>
+      <div class="end-title">
+        END
+      </div>
+      <div ending_container class='typewriter hidden'>
+        <div class='ending' ending_text></div>
+        <div class='score'>Ending #: <span ending_nr></span></div>
+        <div class='score'>Wrongfully marked for decomission: <span score_decomission></span></div>
+        <div class='score'>Wrongfully marked for fit for duty: <span score_fit></span></div>
+      </div>
+    </div>
+    <div class="final-note">
+      <p>Thank you for playing!</p>
+      <p>- <a href="https://dosaki.net">Dosaki</a></p>
+    </div>
+  </div>
+  <script src="js/utils.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/seed-words.js"></script>
+  <script src="js/word-generator.js"></script>
+  <script src="js/htmlize.js"></script>
+  <script src="js/svg.js"></script>
+  <script src="js/screen-transition.js"></script>
+  <script src="js/splash.js"></script>
+  <script src="js/terminal.js"></script>
+  <script src="js/endscreen.js"></script>
+  <script src="js/dialogue.js"></script>
+  <script src="js/subject.js"></script>
+  <script src="js/subject-list.js"></script>
+  <script src="js/subject-factory.js"></script>
+  <script src="js/subject-manager.js"></script>
+  <script src="js/main.js"></script>
+</body>
 </html>

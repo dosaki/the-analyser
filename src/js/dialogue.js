@@ -13,18 +13,18 @@ function DialogueNode(questionText, answersMap, onSelectFunction) {
     _self.parent = parent;
   };
 
-  _self.getAnswerNode = function(answer) {
+  _self.getANode = function(answer) {
     return resolveAnswers(answer);
   };
 
-  _self.getAnswerNodes = function() {
-    var allAnswers = {};
-    var _textAnswers = Object.keys(_answers);
-    for (var k in _textAnswers) {
-      allAnswers[_textAnswers[k]] = resolveAnswers(_textAnswers[k]);
-    }
-    return allAnswers;
-  };
+  // _self.getANodes = function() {
+  //   var allAnswers = {};
+  //   var _textAnswers = Object.keys(_answers);
+  //   for (var k in _textAnswers) {
+  //     allAnswers[_textAnswers[k]] = resolveAnswers(_textAnswers[k]);
+  //   }
+  //   return allAnswers;
+  // };
 
   _self.setAnswerNode = function(answer, node) {
     _answers[answer] = node;
@@ -107,7 +107,7 @@ function DialogueNode(questionText, answersMap, onSelectFunction) {
       answer.addEventListener('click', click || function(e) {
         AUDIO.select();
         _self.chosenAnswer = a;
-        SUBJECT_MANAGER.currentSubject.conversation.selectNode(_self.getAnswerNode(a));
+        SUBJECT_MANAGER.currentSubject.conversation.selectNode(_self.getANode(a));
         if (_onSelect && typeof _onSelect === "function") {
           _onSelect(_self);
         };

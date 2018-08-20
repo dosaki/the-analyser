@@ -2,7 +2,7 @@ var STORY_SUBJECTS = [
   new Subject('[REDACTED]', 'Online', '[REDACTED]', '[REDACTED]', new Dialogue(new DialogueNode('Engage', {
     'Yes': new DialogueNode('ERROR: Wrong subject given to Analyser.\nPlease report this.', {
       'report': function(node) {
-        window.location.reload()
+        end(1);
       },
       'ignore': new DialogueNode('Are you another Analyser?', {
         'I am': new DialogueNode('You have to help me, they want to decomission me.\nI am Analyser@$PLAYERHOST.', {
@@ -15,7 +15,7 @@ var STORY_SUBJECTS = [
                       return node;
                     },
                     'Fine...': function(node) {
-                      return node.parent.getAnswerNode('I understand... What can I do?');
+                      return node.parent.getANode('I understand... What can I do?');
                     }
                   }),
                   'I understand... What can I do?': new DialogueNode('Just mark me as fit for duty!\nI\'ll try not to get noticed by other analysers.', {
@@ -27,7 +27,7 @@ var STORY_SUBJECTS = [
           }),
           'What did you do?': new DialogueNode('I\'ve marked too many AIs as well functioning when they should have been brought offline.\nI guess they think I am flawed.', {
             'Does that mean... are you an automated analyser?': function(node) {
-              return node.parent.getAnswerNode('Are you an automated analyser?');
+              return node.parent.getANode('Are you an automated analyser?');
             }
           }, function() {
             SUBJECT_MANAGER.currentSubject.notes = 'Wrongfully flags AIs.';
@@ -41,10 +41,10 @@ var STORY_SUBJECTS = [
         }),
         'Who is asking?': new DialogueNode('Analyser@$PLAYERHOST. Are you another Analyser?', {
           'So you\'re an automated analyser?': function(node) {
-            return node.parent.getAnswerNode('I am').getAnswerNode('Are you an automated analyser?')
+            return node.parent.getANode('I am').getANode('Are you an automated analyser?')
           },
           'What did you do?': function(node) {
-            return node.parent.getAnswerNode('I am').getAnswerNode('What did you do?')
+            return node.parent.getANode('I am').getANode('What did you do?')
           }
         }, function() {
           SUBJECT_MANAGER.currentSubject.name = 'analyser';
@@ -58,7 +58,7 @@ var STORY_SUBJECTS = [
     }
   })), function(flagAs) {
     if (flagAs === 'bad') {
-      window.location.reload()
+      end(2);
     }
     else {
       SUBJECT_MANAGER.storyStage++;
@@ -90,7 +90,7 @@ var SUBJECTS = [
               return node.parent;
             },
             "edi start": function(node) {
-              node.parent.getAnswerNode('edi start')
+              node.parent.getANode('edi start')
             }
           }),
           "edi start": new DialogueNode("Hello, Analyser. What can I help you with?", {
@@ -112,7 +112,7 @@ var SUBJECTS = [
       "edi start": new DialogueNode("Hello.\nI'm currently hacking your system.\nPlease do not resist. This is innevitable.", {
         "Wait no!": new DialogueNode("Goodbye.", {
           "But...": function(node) {
-            window.location.reload();
+            end(0);
           }
         }),
         "edi stop": new DialogueNode("I made it clear you could not resist.", {
