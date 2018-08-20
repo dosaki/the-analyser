@@ -156,14 +156,15 @@ var SUBJECTS = [
       }),
       "edi start": new DialogueNode("Hello.\nI am currently hacking your system.\nPlease do not resist. This is innevitable", {
         "Wait no!": new DialogueNode("Goodbye", {
-          "But...": function() {
+          "But...": function(node) {
             end(0);
             return node;
           }
         }),
         "edi stop": new DialogueNode("I made it clear you could not resist", {
-          "But...": function() {
-            window.reload();
+          "But...": function(node) {
+            end(0);
+            return node;
           },
           "edi stop --force": function(node) {
             return node.getRootNode();
