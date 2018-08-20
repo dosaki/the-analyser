@@ -11,7 +11,7 @@ function WordGenerator(words, syllableSize) {
   _self.generate = function(wordLength, capitalize) {
     var generatedWord = randPick("qwertyuiopasdfghjklzxcvbnm");
     while(generatedWord.length <= wordLength) {
-      generatedWord += randPick(_nextByCharacter[generatedWord[generatedWord.length - 1]]);
+      generatedWord += (randPick(_nextByCharacter[generatedWord[generatedWord.length - 1]])||randPick("qwertyuiopasdfghjklzxcvbnm"));
     }
     return capitalize ? generatedWord[0].toUpperCase() + generatedWord.substr(1) : generatedWord;
   };

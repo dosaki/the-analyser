@@ -109,18 +109,18 @@ function Terminal() {
 
   var makeHelp = function() {
     var output = document.createElement("div");
-    output.appendChild(_l("Decommission CLI Tool"));
-    output.appendChild(_l("Analyse and evaluate the AIs that have been flagged for analysis & decomissioning."));
+    output.appendChild(_l("AI Analysis & Diagnositics CLI Tool"));
+    output.appendChild(_l("Analyse and evaluate the AIs that have been flagged for analysis."));
     output.appendChild(_l("Select a subject from the list on the left, diagnose it to figure out what's wrong with it."));
-    output.appendChild(_l("If it's salvageable, flag it for fixing, otherwise mark it for decomission."));
+    output.appendChild(_l("If it looks ok, flag it as fit for duty, otherwise mark it for decomission."));
     output.appendChild(_l("Usage:"));
-    output.appendChild(_l("decommission &lt;help&gt;", {
+    output.appendChild(_l("analyser --help", {
       "padding-left": "13px;"
     }));
     output.appendChild(_l("This help", {
       "padding-left": "26px;"
     }));
-    output.appendChild(_l("decommission &lt;analyse&gt; &lt;list&gt;", {
+    output.appendChild(_l("analyser --analyse &lt;list&gt;", {
       "padding-left": "13px;"
     }));
     output.appendChild(_l("Start the interactible CLI tool.", {
@@ -161,9 +161,10 @@ function Terminal() {
   var init = function() {
     _today = new Date();
     _host = "terminal" + rand(1, 90);
+    PLAYER.host = _host;
     _commands = {};
-    _commands["ssh $USERNAME@decommissioner.technology"] = function() {
-      _host = "decommissioner.technology"
+    _commands["ssh $USERNAME@analyser.tech"] = function() {
+      _host = "analyser.tech"
       return null;
     };
     _commands["cd /var/decomissioning/"] = function() {
@@ -173,10 +174,10 @@ function Terminal() {
     _commands["ls -lhtr"] = function() {
       return makeFileList();
     };
-    _commands["decommission --help"] = function() {
+    _commands["analyser --help"] = function() {
       return makeHelp();
     };
-    _commands["decommission --analyse ./decommission-" + _today.toISOString().split('T')[0] + ".list"] = function() {
+    _commands["analyser --decommission ./decommission-" + _today.toISOString().split('T')[0] + ".list"] = function() {
       return makeOutput();
     };
   };

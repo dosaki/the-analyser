@@ -3,6 +3,7 @@ function Player(){
   var _self = this;
   _self.score = 0;
   _self.name = "Anonymous";
+  _self.host = '';
 };
 
 var PLAYER = new Player();

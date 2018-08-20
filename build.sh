@@ -48,8 +48,9 @@ cd ${DIR}
 rm -rf ${BUILD}
 
 size=`du -b dist/decomissioner.zip | awk '{print $1}'`
+leftover=$((size - 13312))
 if [[ $((size - 13312)) -gt 0 ]]; then
-  echo -e "\e[93m\e[1m[WARNING] TOO BIG! File size is ${size}.\e[39m"
+  echo -e "\e[93m\e[1m[WARNING] TOO BIG! File size is ${size}. You need to lose $leftover bytes \e[39m"
 else
-  echo -e "\e[92m\e[1m[SUCCESS] File size under 13k: ${size}.\e[39m"
+  echo -e "\e[92m\e[1m[SUCCESS] File size under 13312 bytes: ${size}.\e[39m"
 fi

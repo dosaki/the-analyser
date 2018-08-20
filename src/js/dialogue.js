@@ -62,7 +62,7 @@ function DialogueNode(questionText, answersMap, onSelectFunction) {
     }
     answersContainerElement.appendChild(makeAnswerElement("Decomission", function(e){
       AUDIO.select();
-      SUBJECT_MANAGER.decomissionCurrent();
+      SUBJECT_MANAGER.decommissionCurrent();
       if (_onSelect && typeof _onSelect === "function") {
         _onSelect(_self);
       };
@@ -106,6 +106,7 @@ function DialogueNode(questionText, answersMap, onSelectFunction) {
       });
       answer.addEventListener('click', click || function(e) {
         AUDIO.select();
+        _self.chosenAnswer = a;
         SUBJECT_MANAGER.currentSubject.conversation.selectNode(_self.getAnswerNode(a));
         if (_onSelect && typeof _onSelect === "function") {
           _onSelect(_self);
@@ -129,8 +130,7 @@ function DialogueNode(questionText, answersMap, onSelectFunction) {
     _self.chosenAnswer = null;
     _self.parent = null;
     _onSelect = s || null;
-
-
+    _self.initAnswers();
   };
 
   init(questionText, answersMap, onSelectFunction);
@@ -145,7 +145,14 @@ function Dialogue(rootNode) {
   _self.currentNode = null;
   _self.previousNode = null;
 
+  var history = [];
   var isDirty;
+
+  _self.renderHistory = function(selector){
+    var container = document.querySelector(selector);
+    container.innerHTML = history.join('<br/>');
+    container.scrollTop = container.scrollHeight;
+  };
 
   _self.renderDialogueNode = function(node, elementSelector) {
     var nodeElement = node.renderNode();
@@ -162,12 +169,15 @@ function Dialogue(rootNode) {
     if (node !== _self.currentNode) {
       _self.previousNode = _self.currentNode;
       _self.currentNode = node;
+      history.push("> " + HTMLIZE.newlines.toBRs(_self.previousNode.question||""));
+      history.push("$ " + HTMLIZE.newlines.toBRs(_self.previousNode.chosenAnswer||""));
       isDirty = true;
     }
   }
 
-  _self.update = function(elementSelector) {
+  _self.update = function(elementSelector, historySelector) {
     if (isDirty) {
+      _self.renderHistory(historySelector);
       _self.renderDialogueNode(_self.currentNode, elementSelector);
       isDirty = false;
     }

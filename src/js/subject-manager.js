@@ -1,4 +1,4 @@
-function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContainerSelector, subjectList, maxAdditional) {
+function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContainerSelector, dialogueHistoryContainerSelector, subjectList, maxAdditional) {
 
   'use strict';
 
@@ -8,11 +8,14 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
   _self.currentSubjectListElement = null;
   _self.previousSubject = null;
   _self.previousSubjectListElement = null;
+  _self.hasCreatedStoryNode = false;
+  _self.storyStage = -1;
 
   var subjects = [];
   var elementSelector = "";
   var listSelector = "";
   var dialogueSelector = "";
+  var dialogueHistorySelector = "";
   var isDirty = true;
   var listIsDirty = true;
 
@@ -25,11 +28,15 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     }
   };
 
+  _self.reRenderSubject = function() {
+    listIsDirty = true;
+    isDirty = true;
+  };
+
   _self.wipeSubjectAreas = function() {
-    var info = document.querySelector(elementSelector);
-    info.innerHTML = "";
-    var dialogue = document.querySelector(dialogueSelector);
-    dialogue.innerHTML = "";
+    _self.renderSubject(); //no subject causes a clear
+    document.querySelector(dialogueSelector).innerHTML = "";
+    document.querySelector(dialogueHistorySelector).innerHTML = "";
   };
 
   _self.highlightSubject = function(element) {
@@ -68,7 +75,7 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
       isDirty = false;
     }
     if (_self.currentSubject) {
-      _self.currentSubject.update(dialogueSelector);
+      _self.currentSubject.update(dialogueSelector, dialogueHistorySelector);
     }
   };
 
@@ -110,7 +117,22 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     subjects.push(subject);
   };
 
-  _self.decomissionCurrent = function() {
+  _self.tryMakeNew = function(){
+    var roll = rand(0,5);
+    if(_self.storyStage === 0 && !_self.hasCreatedStoryNode && STORY_SUBJECTS[_self.storyStage]){
+      _self.hasCreatedStoryNode = true;
+      subjects.push(STORY_SUBJECTS[_self.storyStage]);
+    }
+    else if(_self.storyStage > 0 && !_self.hasCreatedStoryNode && STORY_SUBJECTS[_self.storyStage] && roll >= 3){
+      _self.hasCreatedStoryNode = true;
+      subjects.push(STORY_SUBJECTS[_self.storyStage]);
+    }
+    else if(roll === 0){
+      subjects.push(SUBJECT_FACTORY.makeRandomSubject());
+    }
+  }
+
+  _self.decommissionCurrent = function() {
     _self.previousSubject = _self.currentSubject;
     _self.previousSubjectListElement = _self.currentSubjectListElement;
     _self.currentSubject.flagAs('bad');
@@ -118,6 +140,7 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     _self.currentSubject = null;
     _self.currentSubjectListElement = null;
     _self.wipeSubjectAreas();
+    _self.tryMakeNew();
     listIsDirty = true;
   };
 
@@ -129,6 +152,7 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     _self.currentSubject = null;
     _self.currentSubjectListElement = null;
     _self.wipeSubjectAreas();
+    _self.tryMakeNew();
     listIsDirty = true;
   }
 
@@ -138,11 +162,12 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     });
   };
 
-  var init = function(subjectInfoSelector, subjectListSelector, dialogueContainerSelector, subjectList, maxAdditional) {
+  var init = function(subjectInfoSelector, subjectListSelector, dialogueContainerSelector, dialogueHistoryContainerSelector, subjectList, maxAdditional) {
     subjects = subjectList;
     elementSelector = subjectInfoSelector;
     listSelector = subjectListSelector;
     dialogueSelector = dialogueContainerSelector;
+    dialogueHistorySelector = dialogueHistoryContainerSelector;
     isDirty = true;
     listIsDirty = true;
 
@@ -155,5 +180,5 @@ function SubjectManager(subjectInfoSelector, subjectListSelector, dialogueContai
     });
   }
 
-  init(subjectInfoSelector, subjectListSelector, dialogueContainerSelector, subjectList, maxAdditional);
+  init(subjectInfoSelector, subjectListSelector, dialogueContainerSelector, dialogueHistoryContainerSelector, subjectList, maxAdditional);
 };
