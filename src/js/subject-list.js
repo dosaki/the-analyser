@@ -141,7 +141,7 @@ var SUBJECTS = [
           "edi start": new DialogueNode("Hello, Analyser. What can I help you with?", {
             "Nothing, edi. Everything looks fine": new DialogueNode("Thank you Analyser. I am eager to get back to my functions.\nWould you please deliver your judgement?", {
               "I want to ask you something else": function(node) {
-                node.parent.question = node.parent.question.replace('Hello, Analyser', '');
+                node.parent.question = node.parent.question.replace('Hello, Analyser. ', '');
                 return node.parent;
               }
             }),
