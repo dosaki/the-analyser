@@ -57,10 +57,18 @@ zip -r ${DIST}/analyser.zip .
 cd ${DIR}
 # rm -rf ${BUILD}
 
-size=`du -b dist/analyser.zip | awk '{print $1}'`
+unix_type=$(uname -a | awk '{ print $1 }')
+if [[ "${unix_type}" == "Darwin" ]]; then
+  size=`stat -f%z ./dist/analyser.zip`
+else
+  size=`du -b ./dist/analyser.zip | awk '{print $1}'`
+fi
+
 leftover=$((size - 13312))
 if [[ $((size - 13312)) -gt 0 ]]; then
-  echo -e "\e[93m\e[1m[WARNING] TOO BIG! File size is ${size}. You need to lose $leftover bytes.\e[39m"
+  echo -e "\033[93m\033[1m[WARNING] TOO BIG! File size is ${size}. You need to lose $leftover bytes.\033[39m"
+  exit 1
 else
-  echo -e "\e[92m\e[1m[SUCCESS] File size under 13312 bytes: ${size}. You have $((-leftover)) bytes left.\e[39m"
+  echo -e "\033[92m\033[1m[SUCCESS] File size under 13312 bytes: ${size}. You have $((-leftover)) bytes left.\033[39m"
+  exit 0
 fi
